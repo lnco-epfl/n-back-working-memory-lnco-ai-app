@@ -1,0 +1,98 @@
+{
+  "translations": {
+    "ERROR_BOUNDARY": {
+      "FALLBACK": {
+        "MESSAGE_TITLE": "Sorry, something went wrong with this application",
+        "MESSAGE_FEEDBACK": "Our team has been notified. If you would like to help, please, tell us what happened below.",
+        "ERROR_DETAILS": "Details of the error",
+        "NAME_LABEL": "Name",
+        "NAME_HELPER": "Provide your name (optional)",
+        "EMAIL_LABEL": "Email",
+        "EMAIL_HELPER": "Provide your email (optional)",
+        "COMMENT_LABEL": "Comment",
+        "COMMENT_HELPER": "Tell us what happened (optional)",
+        "THANKS_FOR_FEEDBACK": "Thank you for your feedback!",
+        "SEND": "Send your feedback"
+      }
+    },
+    "NBACK": {
+      "WELCOME_TITLE": "N-Back Working Memory Task",
+      "WELCOME_MESSAGE": "Thank you for participating in this study. You will be performing an n-back working memory task.",
+      "TASK_DESCRIPTION_1": "In this task, you will see numbers displayed one at a time. Your job is to decide if the current number matches the number that appeared 1 position back in the sequence.",
+      "TASK_DESCRIPTION_2": "In this task, you will see numbers displayed one at a time. Your job is to decide if the current number matches the number that appeared 2 positions back in the sequence.",
+      "TASK_DESCRIPTION_3": "In this task, you will see numbers displayed one at a time. Your job is to decide if the current number matches the number that appeared 3 positions back in the sequence.",
+      "TASK_DESCRIPTION_4": "In this task, you will see numbers displayed one at a time. Your job is to decide if the current number matches the number that appeared 4 positions back in the sequence.",
+      "START_BUTTON": "Start Fullscreen",
+      "CONTINUE_BUTTON": "Continue",
+      "INSTRUCTIONS_TITLE": "Task Instructions",
+      "INSTRUCTIONS_OVERVIEW": "In this task, you will see a sequence of single-digit numbers (0-9) appearing one at a time on the screen. Each number will be displayed for a short time, followed by a brief pause before the next number appears.",
+      "INSTRUCTIONS_SEQUENCE": "The task is to monitor the sequence and respond when you notice a pattern.",
+      "TASK_RULES_TITLE": "Task Rules",
+      "TASK_RULES_1": "When you see a number that matches the number from 1 position back, press the spacebar (or click the mouse) as quickly as possible.",
+      "TASK_RULES_2": "When you see a number that matches the number from 2 positions back, press the spacebar (or click the mouse) as quickly as possible.",
+      "TASK_RULES_3": "When you see a number that matches the number from 3 positions back, press the spacebar (or click the mouse) as quickly as possible.",
+      "TASK_RULES_4": "When you see a number that matches the number from 4 positions back, press the spacebar (or click the mouse) as quickly as possible.",
+      "EXAMPLES_1": "Example: If you see the sequence 3 - 7 - 3, you should respond when you see the second 3 because it matches the 3 from 1 position back.",
+      "EXAMPLES_2": "Example: If you see the sequence 5 - 2 - 8 - 5, you should respond when you see the second 5 because it matches the 5 from 2 positions back. A sequence like 8 - 3 - 8 is only a 1-back match, so for 2-back you would NOT respond.",
+      "EXAMPLES_3": "Example: If you see the sequence 1 - 4 - 7 - 2 - 1, you should respond when you see the second 1 because it matches the 1 from 3 positions back.",
+      "EXAMPLES_4": "Example: If you see the sequence 6 - 3 - 9 - 4 - 6, you should respond when you see the second 6 because it matches the 6 from 4 positions back.",
+      "RESPONSE_INSTRUCTIONS_TITLE": "How to Respond",
+      "RESPONSE_METHOD": "Response method:",
+      "RESPONSE_WHEN_MATCH": "When you see a number that matches the target number from n positions back, respond immediately by pressing the spacebar or clicking the mouse.",
+      "RESPONSE_WHEN_NO_MATCH": "When you see a number that does NOT match, do nothing. Simply wait for the next number to appear.",
+      "SPEED_ACCURACY_BALANCE": "Try to be both fast and accurate. Both speed and accuracy are important for this task.",
+      "PRACTICE_INTRO_TITLE": "Practice Session",
+      "PRACTICE_INTRO_MESSAGE": "Before the main task, you will complete a short practice session. This will help you get familiar with the task.",
+      "READY_MESSAGE": "Are you ready to begin?",
+      "START_PRACTICE_BUTTON": "Start Practice"
+    },
+    "PRACTICE": {
+      "FEEDBACK_TITLE": "Practice Complete",
+      "FEEDBACK_TEXT": "Thank you for completing the practice session. Here are your results:",
+      "HITS": "Correct hits:",
+      "FALSE_POSITIVES": "False positives:",
+      "CORRECT_COUNT": "Correct responses:",
+      "ACCURACY": "Accuracy:",
+      "PRESS_TO_CONTINUE": "Press spacebar to continue to the main task"
+    },
+    "MAIN_TASK": {
+      "READY_TITLE": "Main Task Ready",
+      "READY_MESSAGE": "You have completed the practice session. You will now begin the main task. Remember to respond when you see a matching number!",
+      "PRESS_TO_BEGIN": "Press spacebar to begin the main task",
+      "COMPLETE_TITLE": "Task Complete",
+      "COMPLETE_MESSAGE": "Congratulations! You have completed the n-back task.",
+      "PRESS_TO_CONTINUE": "Press spacebar to continue"
+    },
+    "BREAK": {
+      "TITLE": "Take a Break",
+      "MESSAGE": "You have completed a portion of the task. Feel free to take a short break.",
+      "REMAINING": "Remaining trials:",
+      "COUNTDOWN": "Resuming in:",
+      "PRESS_TO_CONTINUE": "Or press spacebar to continue immediately"
+    },
+    "SETTINGS": {
+      "NBACK_TITLE": "N-Back Task Settings",
+      "NBACK_LEVEL": "N-Back Level",
+      "NUMBER_OF_TRIALS": "Number of Main Task Trials",
+      "NUMBER_OF_PRACTICE_TRIALS": "Number of Practice Trials",
+      "DISPLAY_DURATION": "Display Duration (ms)",
+      "DISPLAY_DURATION_HELP": "How long each number is shown (100-2000 ms)",
+      "ISI": "Inter-Stimulus Interval (ms)",
+      "ISI_HELP": "Time between numbers (500-5000 ms)",
+      "RESPONSE_KEY": "Response Method",
+      "SPACEBAR_ONLY": "Spacebar only",
+      "MOUSE_ONLY": "Mouse click only",
+      "SPACEBAR_OR_MOUSE": "Spacebar or mouse click",
+      "CUSTOM_PRACTICE_SEQUENCE": "Custom Practice Sequence (Optional)",
+      "CUSTOM_PRACTICE_SEQUENCE_HELP": "Leave empty for random sequence. Enter comma-separated digits (0-9): 3,5,2,5,7,8,5,...",
+      "CUSTOM_SEQUENCE": "Custom Number Sequence (Optional)",
+      "CUSTOM_SEQUENCE_HELP": "Leave empty for random sequence. Enter comma-separated digits (0-9): 3,5,2,5,7,8,5,...",
+      "BREAK_TITLE": "Break Settings",
+      "ENABLE_BREAKS": "Enable breaks during the task",
+      "BREAK_FREQUENCY": "Break every X trials",
+      "BREAK_FREQUENCY_HELP": "Number of trials between breaks (5-100)",
+      "BREAK_DURATION": "Break duration (seconds)",
+      "BREAK_DURATION_HELP": "Minimum seconds for break (10-300)"
+    }
+  }
+}

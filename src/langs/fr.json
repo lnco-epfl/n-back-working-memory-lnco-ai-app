@@ -1,0 +1,98 @@
+{
+  "translations": {
+    "ERROR_BOUNDARY": {
+      "FALLBACK": {
+        "MESSAGE_TITLE": "Désolé, quelque chose s'est mal passé avec cette application",
+        "MESSAGE_FEEDBACK": "Notre équipe a été notifiée. Si vous souhaitez nous aider, veuillez nous dire ce qui s'est passé ci-dessous.",
+        "ERROR_DETAILS": "Détails de l'erreur",
+        "NAME_LABEL": "Nom",
+        "NAME_HELPER": "Fournissez votre nom (facultatif)",
+        "EMAIL_LABEL": "Email",
+        "EMAIL_HELPER": "Fournissez votre email (facultatif)",
+        "COMMENT_LABEL": "Commentaire",
+        "COMMENT_HELPER": "Dites-nous ce qui s'est passé (facultatif)",
+        "THANKS_FOR_FEEDBACK": "Merci pour vos commentaires!",
+        "SEND": "Envoyer vos commentaires"
+      }
+    },
+    "NBACK": {
+      "WELCOME_TITLE": "Tâche de Mémoire de Travail N-Back",
+      "WELCOME_MESSAGE": "Merci de participer à cette étude. Vous effectuerez une tâche de mémoire de travail n-back.",
+      "TASK_DESCRIPTION_1": "Dans cette tâche, vous verrez des nombres s'afficher un par un. Votre tâche est de décider si le nombre actuel correspond au nombre qui est apparu 1 position en arrière dans la séquence.",
+      "TASK_DESCRIPTION_2": "Dans cette tâche, vous verrez des nombres s'afficher un par un. Votre tâche est de décider si le nombre actuel correspond au nombre qui est apparu 2 positions en arrière dans la séquence.",
+      "TASK_DESCRIPTION_3": "Dans cette tâche, vous verrez des nombres s'afficher un par un. Votre tâche est de décider si le nombre actuel correspond au nombre qui est apparu 3 positions en arrière dans la séquence.",
+      "TASK_DESCRIPTION_4": "Dans cette tâche, vous verrez des nombres s'afficher un par un. Votre tâche est de décider si le nombre actuel correspond au nombre qui est apparu 4 positions en arrière dans la séquence.",
+      "START_BUTTON": "Démarrer le plein écran",
+      "CONTINUE_BUTTON": "Continuer",
+      "INSTRUCTIONS_TITLE": "Instructions de la Tâche",
+      "INSTRUCTIONS_OVERVIEW": "Dans cette tâche, vous verrez une séquence de nombres à un seul chiffre (0-9) s'afficher un par un à l'écran. Chaque nombre s'affichera brièvement, suivi d'une courte pause avant l'apparition du nombre suivant.",
+      "INSTRUCTIONS_SEQUENCE": "La tâche consiste à surveiller la séquence et à répondre lorsque vous remarquez un motif.",
+      "TASK_RULES_TITLE": "Règles de la Tâche",
+      "TASK_RULES_1": "Lorsque vous voyez un nombre qui correspond au nombre d'1 position en arrière, appuyez sur la barre d'espace (ou cliquez avec la souris) aussi rapidement que possible.",
+      "TASK_RULES_2": "Lorsque vous voyez un nombre qui correspond au nombre de 2 positions en arrière, appuyez sur la barre d'espace (ou cliquez avec la souris) aussi rapidement que possible.",
+      "TASK_RULES_3": "Lorsque vous voyez un nombre qui correspond au nombre de 3 positions en arrière, appuyez sur la barre d'espace (ou cliquez avec la souris) aussi rapidement que possible.",
+      "TASK_RULES_4": "Lorsque vous voyez un nombre qui correspond au nombre de 4 positions en arrière, appuyez sur la barre d'espace (ou cliquez avec la souris) aussi rapidement que possible.",
+      "EXAMPLES_1": "Exemple: Si vous voyez la séquence 3 - 7 - 3, vous devez répondre lorsque vous voyez le deuxième 3 car il correspond au 3 d'1 position en arrière.",
+      "EXAMPLES_2": "Exemple: Si vous voyez la séquence 5 - 2 - 8 - 5, vous devez répondre lorsque vous voyez le deuxième 5 car il correspond au 5 de 2 positions en arrière. Une séquence comme 8 - 3 - 8 n'est qu'un appariement 1-back ; pour du 2-back, vous ne répondez PAS.",
+      "EXAMPLES_3": "Exemple: Si vous voyez la séquence 1 - 4 - 7 - 2 - 1, vous devez répondre lorsque vous voyez le deuxième 1 car il correspond au 1 de 3 positions en arrière.",
+      "EXAMPLES_4": "Exemple: Si vous voyez la séquence 6 - 3 - 9 - 4 - 6, vous devez répondre lorsque vous voyez le deuxième 6 car il correspond au 6 de 4 positions en arrière.",
+      "RESPONSE_INSTRUCTIONS_TITLE": "Comment Répondre",
+      "RESPONSE_METHOD": "Méthode de réponse:",
+      "RESPONSE_WHEN_MATCH": "Lorsque vous voyez un nombre qui correspond au nombre cible d'n positions en arrière, répondez immédiatement en appuyant sur la barre d'espace ou en cliquant avec la souris.",
+      "RESPONSE_WHEN_NO_MATCH": "Lorsque vous voyez un nombre qui NE correspond PAS, ne faites rien. Attendez simplement que le nombre suivant s'affiche.",
+      "SPEED_ACCURACY_BALANCE": "Essayez d'être à la fois rapide et précis. La rapidité et la précision sont toutes deux importantes pour cette tâche.",
+      "PRACTICE_INTRO_TITLE": "Séance de Pratique",
+      "PRACTICE_INTRO_MESSAGE": "Avant la tâche principale, vous complèterez une courte séance de pratique. Cela vous aidera à vous familiariser avec la tâche.",
+      "READY_MESSAGE": "Êtes-vous prêt à commencer?",
+      "START_PRACTICE_BUTTON": "Commencer la Pratique"
+    },
+    "PRACTICE": {
+      "FEEDBACK_TITLE": "Pratique Terminée",
+      "FEEDBACK_TEXT": "Merci d'avoir complété la séance de pratique. Voici vos résultats:",
+      "HITS": "Réponses justes sur cibles:",
+      "FALSE_POSITIVES": "Faux positifs:",
+      "CORRECT_COUNT": "Réponses correctes:",
+      "ACCURACY": "Précision:",
+      "PRESS_TO_CONTINUE": "Appuyez sur la barre d'espace pour continuer vers la tâche principale"
+    },
+    "MAIN_TASK": {
+      "READY_TITLE": "Tâche Principale Prête",
+      "READY_MESSAGE": "Vous avez complété la séance de pratique. Vous commencerez maintenant la tâche principale. N'oubliez pas de répondre lorsque vous voyez un nombre correspondant!",
+      "PRESS_TO_BEGIN": "Appuyez sur la barre d'espace pour commencer la tâche principale",
+      "COMPLETE_TITLE": "Tâche Complète",
+      "COMPLETE_MESSAGE": "Félicitations! Vous avez complété la tâche n-back.",
+      "PRESS_TO_CONTINUE": "Appuyez sur la barre d'espace pour continuer"
+    },
+    "BREAK": {
+      "TITLE": "Prenez une Pause",
+      "MESSAGE": "Vous avez complété une partie de la tâche. N'hésitez pas à prendre une courte pause.",
+      "REMAINING": "Essais restants:",
+      "COUNTDOWN": "Reprise dans:",
+      "PRESS_TO_CONTINUE": "Ou appuyez sur la barre d'espace pour continuer immédiatement"
+    },
+    "SETTINGS": {
+      "NBACK_TITLE": "Paramètres de la Tâche N-Back",
+      "NBACK_LEVEL": "Niveau N-Back",
+      "NUMBER_OF_TRIALS": "Nombre d'Essais de la Tâche Principale",
+      "NUMBER_OF_PRACTICE_TRIALS": "Nombre d'Essais de Pratique",
+      "DISPLAY_DURATION": "Durée d'Affichage (ms)",
+      "DISPLAY_DURATION_HELP": "Durée d'affichage de chaque nombre (100-2000 ms)",
+      "ISI": "Intervalle Inter-Stimulus (ms)",
+      "ISI_HELP": "Temps entre les nombres (500-5000 ms)",
+      "RESPONSE_KEY": "Méthode de Réponse",
+      "SPACEBAR_ONLY": "Barre d'espace uniquement",
+      "MOUSE_ONLY": "Clic de souris uniquement",
+      "SPACEBAR_OR_MOUSE": "Barre d'espace ou clic de souris",
+      "CUSTOM_PRACTICE_SEQUENCE": "Séquence de Pratique Personnalisée (Facultatif)",
+      "CUSTOM_PRACTICE_SEQUENCE_HELP": "Laissez vide pour une séquence aléatoire. Entrez des chiffres séparés par des virgules (0-9): 3,5,2,5,7,8,5,...",
+      "CUSTOM_SEQUENCE": "Séquence de Nombres Personnalisée (Facultatif)",
+      "CUSTOM_SEQUENCE_HELP": "Laissez vide pour une séquence aléatoire. Entrez des chiffres séparés par des virgules (0-9): 3,5,2,5,7,8,5,...",
+      "BREAK_TITLE": "Paramètres de Pause",
+      "ENABLE_BREAKS": "Activer les pauses pendant la tâche",
+      "BREAK_FREQUENCY": "Pause tous les X essais",
+      "BREAK_FREQUENCY_HELP": "Nombre d'essais entre les pauses (5-100)",
+      "BREAK_DURATION": "Durée de la pause (secondes)",
+      "BREAK_DURATION_HELP": "Durée minimale de la pause (10-300)"
+    }
+  }
+}
