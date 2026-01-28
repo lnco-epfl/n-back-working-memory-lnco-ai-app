@@ -221,14 +221,74 @@ export class ExperimentState {
         0,
         this.nBackSettings.numberOfTrials,
       );
+      this.state.currentTrialIndex = 0;
+      return;
+    }
+
+    // Generate random sequence with break consideration
+    if (this.breakSettings.enableBreaks) {
+      // Generate sequence in segments with reset after each break
+      this.state.sequence = this.generateSequenceWithBreaks();
     } else {
-      // Generate random sequence
+      // Generate normal continuous sequence
       this.state.sequence = generateNBackSequence(
         this.nBackSettings.numberOfTrials,
         this.nBackSettings.nLevel,
       );
     }
     this.state.currentTrialIndex = 0;
+  }
+
+  /**
+   * Generate sequence with breaks that reset working memory
+   * After each break, the next N trials cannot be targets
+   */
+  private generateSequenceWithBreaks(): number[] {
+    const { numberOfTrials, nLevel } = this.nBackSettings;
+    const { breakFrequency } = this.breakSettings;
+    const sequence: number[] = [];
+
+    let remainingTrials = numberOfTrials;
+    let segmentStart = 0;
+
+    while (remainingTrials > 0) {
+      // Determine segment length
+      let segmentLength: number;
+      if (segmentStart === 0) {
+        // First segment: use full break frequency
+        segmentLength = Math.min(breakFrequency, remainingTrials);
+      } else {
+        // Subsequent segments: add N buffer trials + remaining to next break
+        segmentLength = Math.min(breakFrequency, remainingTrials);
+      }
+
+      // Generate segment
+      const segment = generateNBackSequence(segmentLength, nLevel);
+
+      // If this is not the first segment, ensure first N trials are not targets
+      if (segmentStart > 0) {
+        for (let i = 0; i < Math.min(nLevel, segment.length); i += 1) {
+          // Ensure no match with previous positions (which don't exist in this segment)
+          // Randomize but ensure no accidental matches within the segment
+          let num: number;
+          do {
+            num = Math.floor(Math.random() * 10);
+          } while (
+            (i >= 1 && num === segment[i - 1]) || // Avoid immediate repeats
+            (i >= nLevel && num === segment[i - nLevel]) // Avoid n-back match within segment
+          );
+          segment[i] = num;
+        }
+      }
+
+      // Add segment to full sequence
+      sequence.push(...segment);
+
+      segmentStart += segmentLength;
+      remainingTrials -= segmentLength;
+    }
+
+    return sequence;
   }
 
   startMainTask(): void {

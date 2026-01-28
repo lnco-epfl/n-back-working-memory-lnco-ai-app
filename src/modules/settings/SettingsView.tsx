@@ -31,8 +31,10 @@ const SettingsView: FC = () => {
 
   const [generalSettings, updateGeneralSettings] =
     useState<GeneralSettingsType>(generalSettingsSaved);
-  const [nBackSettings] = useState<NBackSettingsType>(nBackSettingsSaved);
-  const [breakSettings] = useState<BreakSettingsType>(breakSettingsSaved);
+  const [nBackSettings, updateNBackSettings] =
+    useState<NBackSettingsType>(nBackSettingsSaved);
+  const [breakSettings, updateBreakSettings] =
+    useState<BreakSettingsType>(breakSettingsSaved);
   const [photoDiodeSettings, updatePhotoDiodeSettings] =
     useState<PhotoDiodeSettings>(photoDiodeSettingsSaved);
   const [nextStepSettings, updateNextStepSettings] = useState<NextStepSettings>(
@@ -78,8 +80,14 @@ const SettingsView: FC = () => {
         generalSettings={generalSettings}
         onChange={updateGeneralSettings}
       />
-      <NBackSettingsView />
-      <BreakSettingsView />
+      <NBackSettingsView
+        nBackSettings={nBackSettings}
+        onChange={updateNBackSettings}
+      />
+      <BreakSettingsView
+        breakSettings={breakSettings}
+        onChange={updateBreakSettings}
+      />
       <PhotoDiodeSettingsView
         photoDiodeSettings={photoDiodeSettings}
         onChange={updatePhotoDiodeSettings}

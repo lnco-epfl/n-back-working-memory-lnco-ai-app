@@ -9,17 +9,24 @@ import {
   Typography,
 } from '@mui/material';
 
-import { BreakSettingsType, useSettings } from '../context/SettingsContext';
+import { BreakSettingsType } from '../context/SettingsContext';
 
-const BreakSettingsView: FC = () => {
+type BreakSettingsViewProps = {
+  breakSettings: BreakSettingsType;
+  onChange: (newSetting: BreakSettingsType) => void;
+};
+
+const BreakSettingsView: FC<BreakSettingsViewProps> = ({
+  breakSettings,
+  onChange,
+}) => {
   const { t } = useTranslation();
-  const { breakSettings, saveSettings } = useSettings();
 
   const handleChange = (
     setting: keyof BreakSettingsType,
     value: unknown,
   ): void => {
-    saveSettings('breakSettings', {
+    onChange({
       ...breakSettings,
       [setting]: value,
     });
