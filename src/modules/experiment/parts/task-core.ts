@@ -19,8 +19,8 @@ const t = i18n.t.bind(i18n);
  */
 export const buildMainTask = (
   state: ExperimentState,
-  updateData?: (data: DataCollection, settings: AllSettingsType) => void,
-  jsPsych?: JsPsych,
+  updateData: (data: DataCollection, settings: AllSettingsType) => void,
+  jsPsych: JsPsych,
 ): Timeline => {
   const timeline: Timeline = [];
 
@@ -50,20 +50,37 @@ export const buildMainTask = (
 
   // Get the full sequence
   const sequence = state.getSequence();
+  const { nLevel } = state.getNBackSettings();
+  const { breakFrequency } = state.getBreakSettings();
+
+  // Track how many trials since last break (or start)
+  let trialsSinceLastBreak = 0;
 
   // Create main task trials
   for (let i = 0; i < sequence.length; i += 1) {
     // Add break if needed
-    if (state.shouldShowBreak()) {
-      timeline.push(breakTrial(state));
+    if (
+      state.getBreakSettings().enableBreaks &&
+      i > 0 &&
+      i < sequence.length - 1 &&
+      (i + 1) % breakFrequency === 0
+    ) {
+      timeline.push(breakTrial(state, jsPsych));
+      trialsSinceLastBreak = 0; // Reset counter after break
     }
 
     const stimulus = sequence[i];
-    const correctResponse = isTargetTrial(
-      sequence,
-      i,
-      state.getNBackSettings().nLevel,
-    );
+
+    // Determine if this trial should be a target
+    // After a break, the first N trials cannot be targets (working memory reset)
+    let correctResponse: boolean;
+    if (trialsSinceLastBreak < nLevel) {
+      // Within the buffer period after a break - cannot be a target
+      correctResponse = false;
+    } else {
+      // Normal n-back logic
+      correctResponse = isTargetTrial(sequence, i, nLevel);
+    }
 
     const trial = {
       type: NBackStimulusPlugin,
@@ -84,6 +101,7 @@ export const buildMainTask = (
     };
 
     timeline.push(trial);
+    trialsSinceLastBreak += 1;
   }
 
   // Add completion screen

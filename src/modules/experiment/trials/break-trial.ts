@@ -1,4 +1,5 @@
 import htmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response';
+import { JsPsych } from 'jspsych';
 
 import { ExperimentState } from '../jspsych/experiment-state-class';
 import i18n from '../jspsych/i18n';
@@ -6,8 +7,7 @@ import { Trial } from '../utils/types';
 
 const t = i18n.t.bind(i18n);
 
-export const breakTrial = (state: ExperimentState): Trial => {
-  const remaining = state.getRemainingTrials();
+export const breakTrial = (state: ExperimentState, jsPsych: JsPsych): Trial => {
   const duration = state.getBreakDuration();
 
   return {
@@ -16,7 +16,6 @@ export const breakTrial = (state: ExperimentState): Trial => {
         <div class="nback-break">
           <h2>${t('BREAK.TITLE')}</h2>
           <p>${t('BREAK.MESSAGE')}</p>
-          <p><strong>${t('BREAK.REMAINING')}</strong> ${remaining}</p>
           <p class="countdown-text">${t('BREAK.COUNTDOWN')} <span id="break-countdown">${duration}</span>s</p>
           <p class="continue-prompt">${t('BREAK.PRESS_TO_CONTINUE')}</p>
         </div>
@@ -33,6 +32,7 @@ export const breakTrial = (state: ExperimentState): Trial => {
         }
         if (timeLeft <= 0) {
           clearInterval(countdownInterval);
+          jsPsych.finishTrial();
         }
       }, 1000);
 
