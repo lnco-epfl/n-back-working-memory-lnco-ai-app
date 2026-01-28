@@ -11,17 +11,24 @@ import {
   Typography,
 } from '@mui/material';
 
-import { NBackSettingsType, useSettings } from '../context/SettingsContext';
+import { NBackSettingsType } from '../context/SettingsContext';
 
-const NBackSettingsView: FC = () => {
+type NBackSettingsViewProps = {
+  nBackSettings: NBackSettingsType;
+  onChange: (newSetting: NBackSettingsType) => void;
+};
+
+const NBackSettingsView: FC<NBackSettingsViewProps> = ({
+  nBackSettings,
+  onChange,
+}) => {
   const { t } = useTranslation();
-  const { nBackSettings, saveSettings } = useSettings();
 
   const handleChange = (
     setting: keyof NBackSettingsType,
     value: unknown,
   ): void => {
-    saveSettings('nBackSettings', {
+    onChange({
       ...nBackSettings,
       [setting]: value,
     });
