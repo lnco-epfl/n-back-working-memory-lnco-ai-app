@@ -1,6 +1,10 @@
+import type { ScreenCalibration } from '@/utils/screenCalibration';
+
 declare global {
   interface Window {
-    appContext: LocalContext;
+    appContext: LocalContext & {
+      screenCalibration?: ScreenCalibration;
+    };
     Cypress: boolean;
     database: Database;
     apiErrors: object;

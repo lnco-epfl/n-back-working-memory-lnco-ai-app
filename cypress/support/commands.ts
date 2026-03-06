@@ -1,6 +1,8 @@
 /// <reference types="../../src/window" />
 import { Database, LocalContext } from '@graasp/apps-query-client';
 
+import { ScreenCalibration } from '@/utils/screenCalibration';
+
 import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
 import { MOCK_SERVER_ITEM } from '../fixtures/mockItem';
 
@@ -14,7 +16,9 @@ declare global {
        */
       setUpApi(
         database: Partial<Database>,
-        appContext: Partial<LocalContext>,
+        appContext: Partial<LocalContext> & {
+          screenCalibration?: ScreenCalibration;
+        },
       ): void;
     }
   }

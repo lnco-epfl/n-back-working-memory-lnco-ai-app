@@ -30,7 +30,7 @@ const experimentBeginTrial = (state: ExperimentState): Trial => {
 /**
  * Detailed task instructions
  */
-const taskInstructions = (state: ExperimentState): Trial[] => {
+export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
   const { nLevel } = state.getNBackSettings();
 
   return [
@@ -96,7 +96,7 @@ export const buildIntroduction = (state: ExperimentState): Timeline => {
 
   // Full introduction sequence
   instructionTimeline.push(experimentBeginTrial(state));
-  instructionTimeline.push(...taskInstructions(state));
+  instructionTimeline.push(...buildTaskInstructions(state));
 
   return instructionTimeline;
 };

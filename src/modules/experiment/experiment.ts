@@ -11,6 +11,8 @@ import PreloadPlugin from '@jspsych/plugin-preload';
 import { Marked } from '@ts-stack/markdown';
 import { DataCollection, JsPsych, initJsPsych } from 'jspsych';
 
+import { ScreenCalibration } from '@/utils/screenCalibration';
+
 import { ExperimentResult } from '../config/appResults';
 import { AllSettingsType, NextStepSettings } from '../context/SettingsContext';
 import { ExperimentState } from './jspsych/experiment-state-class';
@@ -52,11 +54,15 @@ export async function run({
     settings: AllSettingsType;
     results: ExperimentResult;
     participantName: string;
+    screenCalibration?: ScreenCalibration;
   };
   updateData: (data: DataCollection, settings: AllSettingsType) => void;
 }): Promise<JsPsych> {
   // Initialize experiment state
   const state = new ExperimentState(input.settings);
+  const calibratedFontSize =
+    input.screenCalibration?.fontSize ?? state.getGeneralSettings().fontSize;
+  const calibratedNumberScale = input.screenCalibration?.scale ?? 1;
 
   // Setup photo-diode if enabled
   if (state.getPhotoDiodeSettings().usePhotoDiode !== 'off') {
@@ -80,17 +86,16 @@ export async function run({
     }
   }
 
-  // Apply font size setting
-  if (state.getGeneralSettings().fontSize) {
-    const jspsychDisplayElement = document.getElementById(
-      'jspsych-display-element',
+  // Apply dynamic text and stimulus scaling from settings/calibration.
+  const jspsychDisplayElement = document.getElementById(
+    'jspsych-display-element',
+  );
+  if (jspsychDisplayElement) {
+    jspsychDisplayElement.setAttribute('data-font-size', calibratedFontSize);
+    jspsychDisplayElement.style.setProperty(
+      '--nback-calibration-scale',
+      String(calibratedNumberScale),
     );
-    if (jspsychDisplayElement) {
-      jspsychDisplayElement.setAttribute(
-        'data-font-size',
-        state.getGeneralSettings().fontSize,
-      );
-    }
   }
 
   const updateDataWithSettings = (data: DataCollection): void => {
@@ -139,10 +144,10 @@ export async function run({
       const dropdown = document.createElement('select');
       dropdown.className = 'custom-dropdown';
       dropdown.innerHTML = `
-          <option value="small" ${state.getGeneralSettings().fontSize === 'small' ? 'selected' : ''}>Small</option>
-          <option value="normal" ${state.getGeneralSettings().fontSize === 'normal' ? 'selected' : ''}>Normal</option>
-          <option value="large" ${state.getGeneralSettings().fontSize === 'large' ? 'selected' : ''}>Large</option>
-          <option value="extra-large" ${state.getGeneralSettings().fontSize === 'extra-large' ? 'selected' : ''}>Extra Large</option>
+          <option value="small" ${calibratedFontSize === 'small' ? 'selected' : ''}>Small</option>
+          <option value="normal" ${calibratedFontSize === 'normal' ? 'selected' : ''}>Normal</option>
+          <option value="large" ${calibratedFontSize === 'large' ? 'selected' : ''}>Large</option>
+          <option value="extra-large" ${calibratedFontSize === 'extra-large' ? 'selected' : ''}>Extra Large</option>
         `;
       const fontSizeTitle = document.createElement('span');
       fontSizeTitle.innerHTML = 'Font Size:';
@@ -152,9 +157,6 @@ export async function run({
 
       dropdown.addEventListener('change', (event) => {
         const { target } = event;
-        const jspsychDisplayElement = document.getElementById(
-          'jspsych-display-element',
-        );
         if (jspsychDisplayElement && target instanceof HTMLSelectElement) {
           jspsychDisplayElement.setAttribute('data-font-size', target.value);
         }

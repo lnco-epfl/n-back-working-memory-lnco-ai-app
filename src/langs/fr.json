@@ -53,7 +53,12 @@
       "FALSE_POSITIVES": "Faux positifs:",
       "CORRECT_COUNT": "Réponses correctes:",
       "ACCURACY": "Précision:",
-      "PRESS_TO_CONTINUE": "Appuyez sur la barre d'espace pour continuer vers la tâche principale"
+      "PRESS_TO_CONTINUE": "Appuyez sur la barre d'espace pour continuer vers la tâche principale",
+      "NEXT_STEP_TITLE": "Que souhaitez-vous faire ensuite?",
+      "NEXT_STEP_MESSAGE": "Vous pouvez continuer vers la tâche principale ou refaire la section de pratique.",
+      "CONTINUE_TO_MAIN": "Continuer vers la tâche principale",
+      "REDO_PRACTICE": "Refaire la pratique",
+      "RETRIES_EXHAUSTED": "Vous avez atteint le nombre maximal de répétitions de pratique."
     },
     "MAIN_TASK": {
       "READY_TITLE": "Tâche Principale Prête",
@@ -76,6 +81,8 @@
       "NBACK_LEVEL": "Niveau N-Back",
       "NUMBER_OF_TRIALS": "Nombre d'Essais de la Tâche Principale",
       "NUMBER_OF_PRACTICE_TRIALS": "Nombre d'Essais de Pratique",
+      "PRACTICE_REPETITIONS_ALLOWED": "Répétitions de pratique autorisées",
+      "PRACTICE_REPETITIONS_ALLOWED_HELP": "Nombre de fois que la pratique peut être répétée après la première exécution",
       "DISPLAY_DURATION": "Durée d'Affichage (ms)",
       "DISPLAY_DURATION_HELP": "Durée d'affichage de chaque nombre (100-2000 ms)",
       "ISI": "Intervalle Inter-Stimulus (ms)",

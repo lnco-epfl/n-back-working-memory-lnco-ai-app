@@ -13,6 +13,7 @@ export type NBackSettingsType = {
   nLevel: 1 | 2 | 3 | 4;
   numberOfTrials: number;
   numberOfPracticeTrials: number;
+  numberOfPracticeRepetitionsAllowed: number;
   customSequence: string; // comma-separated numbers, empty = random
   customPracticeSequence: string; // comma-separated numbers for practice, empty = random
   displayDuration: number; // milliseconds
@@ -63,6 +64,7 @@ const defaultSettingsValues: AllSettingsType = {
     nLevel: 2,
     numberOfTrials: 50,
     numberOfPracticeTrials: 10,
+    numberOfPracticeRepetitionsAllowed: 1,
     customSequence: '',
     customPracticeSequence: '',
     displayDuration: 500,
@@ -70,7 +72,7 @@ const defaultSettingsValues: AllSettingsType = {
     responseKey: 'space',
   },
   breakSettings: {
-    enableBreaks: false,
+    enableBreaks: true,
     breakFrequency: 25,
     breakDuration: 30,
   },
@@ -157,15 +159,19 @@ export const SettingsProvider: FC<Prop> = ({ children }) => {
         <T extends AllSettingsNameType>(acc: AllSettingsType, key: T) => {
           const setting = appSettingsList.find((s) => s.name === key);
           if (setting) {
-            const settingData =
-              setting?.data as unknown as AllSettingsType[typeof key];
-            acc[key] = settingData;
+            const settingData = setting.data as Partial<AllSettingsType[T]>;
+            // Merge persisted data with defaults to keep backward compatibility
+            // when newly added fields are absent in older saved settings.
+            acc[key] = {
+              ...defaultSettingsValues[key],
+              ...settingData,
+            } as AllSettingsType[T];
           } else {
             acc[key] = defaultSettingsValues[key];
           }
           return acc;
         },
-        defaultSettingsValues,
+        { ...defaultSettingsValues },
       );
       return {
         ...allSettings,

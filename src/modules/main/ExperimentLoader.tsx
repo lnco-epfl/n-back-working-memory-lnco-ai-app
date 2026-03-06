@@ -7,6 +7,7 @@ import { useLocalContext } from '@graasp/apps-query-client';
 import { DataCollection, JsPsych } from 'jspsych';
 
 import { hooks } from '@/config/queryClient';
+import { parseScreenCalibrationFromLocalContext } from '@/utils/screenCalibration';
 
 import { TrialData } from '../config/appResults';
 import useExperimentResults from '../context/ExperimentContext';
@@ -15,7 +16,10 @@ import { run } from '../experiment/experiment';
 
 export const ExperimentLoader: FC = () => {
   const settings = useSettings();
-  const { memberId } = useLocalContext();
+  const localContext = useLocalContext();
+  const { memberId } = localContext;
+  const screenCalibration =
+    parseScreenCalibrationFromLocalContext(localContext);
   const { data: appContextData } = hooks.useAppContext();
   let participantName = '';
 
@@ -74,6 +78,7 @@ export const ExperimentLoader: FC = () => {
             settings,
             results: experimentResultsAppData,
             participantName,
+            screenCalibration,
           },
           // eslint-disable-next-line @typescript-eslint/no-shadow
           updateData: (data, settings) => updateData(data, settings),
@@ -95,6 +100,7 @@ export const ExperimentLoader: FC = () => {
             settings,
             results: experimentResultsAppData,
             participantName,
+            screenCalibration,
           },
           // eslint-disable-next-line @typescript-eslint/no-shadow
           updateData: (data, settings) => updateData(data, settings),
@@ -102,7 +108,13 @@ export const ExperimentLoader: FC = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [experimentResultsAppData, setExperimentResult, settings, status]);
+  }, [
+    experimentResultsAppData,
+    screenCalibration,
+    setExperimentResult,
+    settings,
+    status,
+  ]);
 
   if (completedContent) {
     return completedContent;

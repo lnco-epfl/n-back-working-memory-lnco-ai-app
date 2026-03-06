@@ -27,6 +27,10 @@ body {
 }
 
 /* Apply font-size scaling to elements */
+[data-font-size] {
+  font-size: calc(var(--font-scale) * 1rem);
+}
+
 [data-font-size] h1 {
   font-size: calc(var(--font-scale) * 2.5rem);
 }
@@ -44,7 +48,7 @@ body {
 }
 
 .jspsych-display-element {
-  background-color: #000000;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -77,11 +81,18 @@ body {
   overflow-x: hidden;
   font-size: calc(var(--font-scale) * 1rem);
   gap: 5px;
-  color: #fff;
+  color: #000;
 }
 
 #jspsych-html-button-response-stimulus {
   max-width: 70vw;
+}
+
+#jspsych-html-button-response-btngroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 #thermometer {
@@ -102,9 +113,9 @@ body {
 }
 
 #jspsych-progressbar-container {
-  color: #fff;
-  border-bottom: 1px solid #444;
-  background-color: #141414;
+  color: #000;
+  border-bottom: 1px solid #d0d0d0;
+  background-color: #f5f5f5;
   margin-bottom: 1em;
   text-align: center;
   padding: 8px 0px;
@@ -269,9 +280,9 @@ ul li {
 }
 
 .jspsych-btn {
-  background-color: #000;
-  color: white;
-  border: none;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #222;
   padding: 5px;
   font-size: calc(var(--font-scale) * 1rem);
   padding: 6px 16px;
@@ -371,10 +382,11 @@ ul li {
 
 /* N-Back Task Styles */
 .nback-trial {
-  background-color: #000;
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   min-height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1.5rem 1rem;
@@ -389,9 +401,11 @@ ul li {
 }
 
 .number-display {
-  font-size: calc(var(--font-scale, 1) * 8rem);
+  font-size: calc(
+    var(--font-scale, 1) * var(--nback-calibration-scale, 1) * 8rem
+  );
   font-weight: bold;
-  color: #fff;
+  color: #000;
 }
 
 .nback-intro,
@@ -405,7 +419,7 @@ ul li {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  color: #fff;
+  color: #000;
 }
 
 .nback-intro h1,
@@ -435,21 +449,4 @@ ul li {
 
 .countdown-text {
   font-size: calc(var(--font-scale, 1) * 1.2rem);
-}
-
-/* Font size variants for N-back */
-.font-small .number-display {
-  font-size: 4rem;
-}
-
-.font-normal .number-display {
-  font-size: 8rem;
-}
-
-.font-large .number-display {
-  font-size: 10rem;
-}
-
-.font-extra-large .number-display {
-  font-size: 12rem;
 }
