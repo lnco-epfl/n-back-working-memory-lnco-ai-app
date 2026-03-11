@@ -20,6 +20,20 @@ export const ExperimentLoader: FC = () => {
   const { memberId } = localContext;
   const screenCalibration =
     parseScreenCalibrationFromLocalContext(localContext);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.info('[screenCalibration] Local context item/member', {
+      itemId: localContext.itemId,
+      memberId: localContext.memberId,
+    });
+    // eslint-disable-next-line no-console
+    console.info(
+      '[screenCalibration] Effective calibration from localContext',
+      screenCalibration,
+    );
+  }, [localContext.itemId, localContext.memberId, screenCalibration]);
+
   const { data: appContextData } = hooks.useAppContext();
   let participantName = '';
 

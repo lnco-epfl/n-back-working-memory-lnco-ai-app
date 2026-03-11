@@ -20,6 +20,7 @@ type MessagePayload = {
 
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 3;
+const CALIBRATION_LOG_PREFIX = '[screenCalibration]';
 
 export const isValidCalibrationScale = (value: unknown): value is number =>
   typeof value === 'number' && value > MIN_SCALE && value < MAX_SCALE;
@@ -34,6 +35,11 @@ export const normalizeScreenCalibration = (
   source: unknown,
 ): ScreenCalibration | undefined => {
   if (!source || typeof source !== 'object') {
+    // eslint-disable-next-line no-console
+    console.info(
+      `${CALIBRATION_LOG_PREFIX} Missing or non-object calibration payload`,
+      source,
+    );
     return undefined;
   }
 
@@ -49,9 +55,36 @@ export const normalizeScreenCalibration = (
     ? calibration.fontSize
     : undefined;
 
+  if (calibration.scale !== undefined && scale === undefined) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `${CALIBRATION_LOG_PREFIX} Rejected scale (expected > ${MIN_SCALE} and < ${MAX_SCALE})`,
+      calibration.scale,
+    );
+  }
+
+  if (calibration.fontSize !== undefined && fontSize === undefined) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `${CALIBRATION_LOG_PREFIX} Rejected fontSize (expected one of ${FONT_SIZE_OPTIONS.join(', ')})`,
+      calibration.fontSize,
+    );
+  }
+
   if (scale === undefined && fontSize === undefined) {
+    // eslint-disable-next-line no-console
+    console.info(
+      `${CALIBRATION_LOG_PREFIX} No valid calibration fields found`,
+      calibration,
+    );
     return undefined;
   }
+
+  // eslint-disable-next-line no-console
+  console.info(`${CALIBRATION_LOG_PREFIX} Parsed calibration`, {
+    scale,
+    fontSize,
+  });
 
   return { scale, fontSize };
 };
@@ -60,11 +93,21 @@ export const parseScreenCalibrationFromLocalContext = (
   localContext: unknown,
 ): ScreenCalibration | undefined => {
   if (!localContext || typeof localContext !== 'object') {
+    // eslint-disable-next-line no-console
+    console.info(
+      `${CALIBRATION_LOG_PREFIX} Local context unavailable for calibration parsing`,
+    );
     return undefined;
   }
 
   const maybeCalibration = (localContext as { screenCalibration?: unknown })
     .screenCalibration;
+
+  // eslint-disable-next-line no-console
+  console.info(
+    `${CALIBRATION_LOG_PREFIX} Raw localContext.screenCalibration`,
+    maybeCalibration,
+  );
 
   return normalizeScreenCalibration(maybeCalibration);
 };
