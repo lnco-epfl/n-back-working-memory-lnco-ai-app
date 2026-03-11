@@ -13,6 +13,7 @@ export type ScreenCalibration = {
 };
 
 type MessagePayload = {
+  type?: unknown;
   payload?: {
     screenCalibration?: unknown;
   };
@@ -117,6 +118,28 @@ export const parseScreenCalibrationFromMessagePayload = (
 ): ScreenCalibration | undefined =>
   normalizeScreenCalibration(payload?.payload?.screenCalibration);
 
+export const parseMessageData = (data: unknown): MessagePayload | undefined => {
+  if (typeof data === 'string') {
+    try {
+      const parsed = JSON.parse(data) as MessagePayload;
+      return parsed;
+    } catch {
+      // eslint-disable-next-line no-console
+      console.info(
+        `${CALIBRATION_LOG_PREFIX} Ignoring non-JSON message payload`,
+        data,
+      );
+      return undefined;
+    }
+  }
+
+  if (data && typeof data === 'object') {
+    return data as MessagePayload;
+  }
+
+  return undefined;
+};
+
 export const isGetContextSuccessType = (
   messageType: unknown,
   itemId: string,
@@ -130,6 +153,19 @@ export const buildPostCalibrationScaleMessage = (
     type: `POST_CALIBRATION_SCALE_${itemId}`,
     payload: {
       screenCalibration: calibration,
+    },
+  });
+
+export const buildGetContextMessage = (
+  itemId: string,
+  key: string,
+  origin: string,
+): string =>
+  JSON.stringify({
+    type: `GET_CONTEXT_${itemId}`,
+    payload: {
+      key,
+      origin,
     },
   });
 
