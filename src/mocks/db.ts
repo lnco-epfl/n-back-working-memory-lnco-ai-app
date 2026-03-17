@@ -62,6 +62,7 @@ const buildDatabase = (members?: CompleteMember[]): Database => ({
   ],
   members: members ?? mockMembers,
   appSettings: [],
+  uploadedFiles: [],
   items: [mockItem],
 });
 

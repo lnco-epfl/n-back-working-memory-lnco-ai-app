@@ -6,16 +6,8 @@ import { useLocalContext } from '@graasp/apps-query-client';
 
 import { DataCollection, JsPsych } from 'jspsych';
 
-import { GRAASP_APP_KEY } from '@/config/env';
 import { hooks } from '@/config/queryClient';
-import {
-  ScreenCalibration,
-  buildGetContextMessage,
-  isGetContextSuccessType,
-  parseMessageData,
-  parseScreenCalibrationFromLocalContext,
-  parseScreenCalibrationFromMessagePayload,
-} from '@/utils/screenCalibration';
+import { parseScreenCalibrationFromLocalContext } from '@/utils/screenCalibration';
 
 import { TrialData } from '../config/appResults';
 import useExperimentResults from '../context/ExperimentContext';
@@ -25,132 +17,9 @@ import { run } from '../experiment/experiment';
 export const ExperimentLoader: FC = () => {
   const settings = useSettings();
   const localContext = useLocalContext();
-  const { itemId, memberId } = localContext;
-  const localContextCalibration =
+  const { memberId } = localContext;
+  const screenCalibration =
     parseScreenCalibrationFromLocalContext(localContext);
-  const [messageCalibration, setMessageCalibration] = useState<
-    ScreenCalibration | undefined
-  >();
-  const screenCalibration = messageCalibration ?? localContextCalibration;
-
-  useEffect(() => {
-    if (!itemId) {
-      return undefined;
-    }
-
-    const handleMessage = (event: MessageEvent): void => {
-      const message = parseMessageData(event.data);
-      if (!message || !isGetContextSuccessType(message.type, itemId)) {
-        return;
-      }
-
-      // eslint-disable-next-line no-console
-      console.info(
-        '[screenCalibration] Received GET_CONTEXT_SUCCESS payload',
-        message,
-      );
-
-      const parsedCalibration =
-        parseScreenCalibrationFromMessagePayload(message);
-
-      if (parsedCalibration) {
-        // eslint-disable-next-line no-console
-        console.info(
-          '[screenCalibration] Using calibration from GET_CONTEXT_SUCCESS',
-          parsedCalibration,
-        );
-        setMessageCalibration(parsedCalibration);
-      } else {
-        // eslint-disable-next-line no-console
-        console.warn(
-          '[screenCalibration] GET_CONTEXT_SUCCESS received without valid screenCalibration',
-          message,
-        );
-      }
-    };
-
-    window.addEventListener('message', handleMessage);
-
-    const requestContext = (): void => {
-      const payload = buildGetContextMessage(
-        itemId,
-        GRAASP_APP_KEY,
-        window.location.origin,
-      );
-
-      // eslint-disable-next-line no-console
-      console.info('[screenCalibration] Requesting context from parent', {
-        itemId,
-        origin: window.location.origin,
-      });
-
-      window.parent.postMessage(payload, '*');
-    };
-
-    requestContext();
-
-    let attempt = 0;
-    const maxAttempts = 8;
-    const retryId = window.setInterval(() => {
-      attempt += 1;
-      if (messageCalibration || attempt >= maxAttempts) {
-        window.clearInterval(retryId);
-        return;
-      }
-      requestContext();
-    }, 250);
-
-    return () => {
-      window.clearInterval(retryId);
-      window.removeEventListener('message', handleMessage);
-    };
-  }, [itemId, messageCalibration]);
-
-  useEffect(() => {
-    const jspsychDisplayElement = document.getElementById(
-      'jspsych-display-element',
-    );
-
-    if (!jspsychDisplayElement || !screenCalibration) {
-      return;
-    }
-
-    if (screenCalibration.fontSize) {
-      jspsychDisplayElement.setAttribute(
-        'data-font-size',
-        screenCalibration.fontSize,
-      );
-    }
-
-    if (screenCalibration.scale) {
-      jspsychDisplayElement.style.setProperty(
-        '--nback-calibration-scale',
-        String(screenCalibration.scale),
-      );
-    }
-
-    // eslint-disable-next-line no-console
-    console.info('[screenCalibration] Applied late calibration update to DOM', {
-      fontSize: jspsychDisplayElement.getAttribute('data-font-size'),
-      scale: jspsychDisplayElement.style.getPropertyValue(
-        '--nback-calibration-scale',
-      ),
-    });
-  }, [screenCalibration]);
-
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.info('[screenCalibration] Local context item/member', {
-      itemId: localContext.itemId,
-      memberId: localContext.memberId,
-    });
-    // eslint-disable-next-line no-console
-    console.info(
-      '[screenCalibration] Effective calibration from localContext/message',
-      screenCalibration,
-    );
-  }, [localContext.itemId, localContext.memberId, screenCalibration]);
-
   const { data: appContextData } = hooks.useAppContext();
   let participantName = '';
 

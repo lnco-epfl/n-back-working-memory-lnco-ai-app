@@ -63,13 +63,6 @@ export async function run({
   const calibratedFontSize =
     input.screenCalibration?.fontSize ?? state.getGeneralSettings().fontSize;
   const calibratedNumberScale = input.screenCalibration?.scale ?? 1;
-  // eslint-disable-next-line no-console
-  console.info('[screenCalibration] Runtime calibration resolution', {
-    fromContext: input.screenCalibration,
-    fallbackFontSize: state.getGeneralSettings().fontSize,
-    appliedFontSize: calibratedFontSize,
-    appliedScale: calibratedNumberScale,
-  });
 
   // Setup photo-diode if enabled
   if (state.getPhotoDiodeSettings().usePhotoDiode !== 'off') {
@@ -103,13 +96,6 @@ export async function run({
       '--nback-calibration-scale',
       String(calibratedNumberScale),
     );
-    // eslint-disable-next-line no-console
-    console.info('[screenCalibration] Applied display attributes', {
-      dataFontSize: jspsychDisplayElement.getAttribute('data-font-size'),
-      cssScale: jspsychDisplayElement.style.getPropertyValue(
-        '--nback-calibration-scale',
-      ),
-    });
   }
 
   const updateDataWithSettings = (data: DataCollection): void => {

@@ -12,16 +12,8 @@ export type ScreenCalibration = {
   fontSize?: FontSizeOption;
 };
 
-type MessagePayload = {
-  type?: unknown;
-  payload?: {
-    screenCalibration?: unknown;
-  };
-};
-
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 3;
-const CALIBRATION_LOG_PREFIX = '[screenCalibration]';
 
 export const isValidCalibrationScale = (value: unknown): value is number =>
   typeof value === 'number' && value > MIN_SCALE && value < MAX_SCALE;
@@ -36,11 +28,6 @@ export const normalizeScreenCalibration = (
   source: unknown,
 ): ScreenCalibration | undefined => {
   if (!source || typeof source !== 'object') {
-    // eslint-disable-next-line no-console
-    console.info(
-      `${CALIBRATION_LOG_PREFIX} Missing or non-object calibration payload`,
-      source,
-    );
     return undefined;
   }
 
@@ -56,36 +43,9 @@ export const normalizeScreenCalibration = (
     ? calibration.fontSize
     : undefined;
 
-  if (calibration.scale !== undefined && scale === undefined) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      `${CALIBRATION_LOG_PREFIX} Rejected scale (expected > ${MIN_SCALE} and < ${MAX_SCALE})`,
-      calibration.scale,
-    );
-  }
-
-  if (calibration.fontSize !== undefined && fontSize === undefined) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      `${CALIBRATION_LOG_PREFIX} Rejected fontSize (expected one of ${FONT_SIZE_OPTIONS.join(', ')})`,
-      calibration.fontSize,
-    );
-  }
-
   if (scale === undefined && fontSize === undefined) {
-    // eslint-disable-next-line no-console
-    console.info(
-      `${CALIBRATION_LOG_PREFIX} No valid calibration fields found`,
-      calibration,
-    );
     return undefined;
   }
-
-  // eslint-disable-next-line no-console
-  console.info(`${CALIBRATION_LOG_PREFIX} Parsed calibration`, {
-    scale,
-    fontSize,
-  });
 
   return { scale, fontSize };
 };
@@ -94,88 +54,11 @@ export const parseScreenCalibrationFromLocalContext = (
   localContext: unknown,
 ): ScreenCalibration | undefined => {
   if (!localContext || typeof localContext !== 'object') {
-    // eslint-disable-next-line no-console
-    console.info(
-      `${CALIBRATION_LOG_PREFIX} Local context unavailable for calibration parsing`,
-    );
     return undefined;
   }
 
   const maybeCalibration = (localContext as { screenCalibration?: unknown })
     .screenCalibration;
 
-  // eslint-disable-next-line no-console
-  console.info(
-    `${CALIBRATION_LOG_PREFIX} Raw localContext.screenCalibration`,
-    maybeCalibration,
-  );
-
   return normalizeScreenCalibration(maybeCalibration);
 };
-
-export const parseScreenCalibrationFromMessagePayload = (
-  payload: MessagePayload | undefined,
-): ScreenCalibration | undefined =>
-  normalizeScreenCalibration(payload?.payload?.screenCalibration);
-
-export const parseMessageData = (data: unknown): MessagePayload | undefined => {
-  if (typeof data === 'string') {
-    try {
-      const parsed = JSON.parse(data) as MessagePayload;
-      return parsed;
-    } catch {
-      // eslint-disable-next-line no-console
-      console.info(
-        `${CALIBRATION_LOG_PREFIX} Ignoring non-JSON message payload`,
-        data,
-      );
-      return undefined;
-    }
-  }
-
-  if (data && typeof data === 'object') {
-    return data as MessagePayload;
-  }
-
-  return undefined;
-};
-
-export const isGetContextSuccessType = (
-  messageType: unknown,
-  itemId: string,
-): boolean => messageType === `GET_CONTEXT_SUCCESS_${itemId}`;
-
-export const buildPostCalibrationScaleMessage = (
-  itemId: string,
-  calibration: ScreenCalibration,
-): string =>
-  JSON.stringify({
-    type: `POST_CALIBRATION_SCALE_${itemId}`,
-    payload: {
-      screenCalibration: calibration,
-    },
-  });
-
-export const buildGetContextMessage = (
-  itemId: string,
-  key: string,
-  origin: string,
-): string =>
-  JSON.stringify({
-    type: `GET_CONTEXT_${itemId}`,
-    payload: {
-      key,
-      origin,
-    },
-  });
-
-export const buildGetContextSuccessMessage = (
-  itemId: string,
-  calibration: ScreenCalibration,
-): string =>
-  JSON.stringify({
-    type: `GET_CONTEXT_SUCCESS_${itemId}`,
-    payload: {
-      screenCalibration: calibration,
-    },
-  });
