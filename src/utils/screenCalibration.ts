@@ -1,3 +1,10 @@
+import type {
+  LocalContext,
+  ScreenCalibration as SDKScreenCalibration,
+} from '@graasp/sdk';
+
+export type ScreenCalibration = SDKScreenCalibration;
+
 export const FONT_SIZE_OPTIONS = [
   'small',
   'normal',
@@ -6,11 +13,6 @@ export const FONT_SIZE_OPTIONS = [
 ] as const;
 
 export type FontSizeOption = (typeof FONT_SIZE_OPTIONS)[number];
-
-export type ScreenCalibration = {
-  scale?: number;
-  fontSize?: FontSizeOption;
-};
 
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 3;
@@ -51,14 +53,13 @@ export const normalizeScreenCalibration = (
 };
 
 export const parseScreenCalibrationFromLocalContext = (
-  localContext: unknown,
+  localContext: Pick<LocalContext, 'screenCalibration'> | undefined,
 ): ScreenCalibration | undefined => {
-  if (!localContext || typeof localContext !== 'object') {
+  if (!localContext) {
     return undefined;
   }
 
-  const maybeCalibration = (localContext as { screenCalibration?: unknown })
-    .screenCalibration;
+  const maybeCalibration = localContext.screenCalibration;
 
   return normalizeScreenCalibration(maybeCalibration);
 };

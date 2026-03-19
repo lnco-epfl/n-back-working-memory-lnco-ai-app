@@ -17,7 +17,7 @@ import { run } from '../experiment/experiment';
 export const ExperimentLoader: FC = () => {
   const settings = useSettings();
   const localContext = useLocalContext();
-  const { memberId } = localContext;
+  const { accountId } = localContext;
   const screenCalibration =
     parseScreenCalibrationFromLocalContext(localContext);
   const { data: appContextData } = hooks.useAppContext();
@@ -25,7 +25,7 @@ export const ExperimentLoader: FC = () => {
 
   if (appContextData?.members) {
     participantName =
-      appContextData.members.find((member) => member.id === memberId)?.name ??
+      appContextData.members.find((member) => member.id === accountId)?.name ??
       '';
   }
   const jsPsychRef = useRef<null | Promise<JsPsych>>(null);
