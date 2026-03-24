@@ -5,6 +5,7 @@ import Loader from '../common/Loader';
 
 export type GeneralSettingsType = {
   fontSize: 'small' | 'normal' | 'large' | 'extra-large';
+  language: 'en' | 'fr';
   skipInstructions: boolean;
   skipPractice: boolean;
 };
@@ -57,16 +58,18 @@ export type AllSettingsType = {
 const defaultSettingsValues: AllSettingsType = {
   generalSettings: {
     fontSize: 'normal',
+    language: 'en',
     skipInstructions: false,
     skipPractice: false,
   },
   nBackSettings: {
     nLevel: 2,
-    numberOfTrials: 50,
-    numberOfPracticeTrials: 10,
+    numberOfTrials: 74,
+    numberOfPracticeTrials: 24,
     numberOfPracticeRepetitionsAllowed: 1,
-    customSequence: '',
-    customPracticeSequence: '',
+    customSequence:
+      '4,7,3,7,6,2,6,8,5,8,3,9,3,6,2,8,2,4,7,4,6,3,6,8,5,9,5,2,7,3,7,4,6,8,6,3,9,5,9,2,7,4,7,8,3,6,3,9,4,5,4,7,2,8,2,3,6,4,6,8,5,3,5,7,4,9,4,2,6,8,3,7,5,9',
+    customPracticeSequence: '5,2,8,2,6,9,6,3,8,3,7,4,7,2,9,5,9,4,6,4,8,3,8,5',
     displayDuration: 500,
     interStimulusInterval: 2000,
     responseKey: 'space',

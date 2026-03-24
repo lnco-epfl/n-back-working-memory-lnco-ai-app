@@ -1,9 +1,4 @@
-import type {
-  LocalContext,
-  ScreenCalibration as SDKScreenCalibration,
-} from '@graasp/sdk';
-
-export type ScreenCalibration = SDKScreenCalibration;
+import type { LocalContext, ScreenCalibration } from '@graasp/sdk';
 
 export const FONT_SIZE_OPTIONS = [
   'small',

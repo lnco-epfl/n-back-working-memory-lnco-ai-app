@@ -8,27 +8,24 @@ import { Timeline, Trial } from '../utils/types';
 const t = i18n.t.bind(i18n);
 
 /**
- * Fullscreen entry screen with instructions
+ * Fullscreen entry screen
  */
-const experimentBeginTrial = (state: ExperimentState): Trial => {
-  const { nLevel } = state.getNBackSettings();
-
-  return {
-    type: FullscreenPlugin,
-    choices: [t('NBACK.START_BUTTON')],
-    message: `
-      <div class="nback-intro">
-        <h1>${t('NBACK.WELCOME_TITLE')}</h1>
-        <p>${t('NBACK.WELCOME_MESSAGE')}</p>
-        <p>${t(`NBACK.TASK_DESCRIPTION_${nLevel}`)}</p>
-      </div>
-    `,
-    fullscreen_mode: true,
-  };
-};
+const experimentBeginTrial = (): Trial => ({
+  type: FullscreenPlugin,
+  choices: [t('NBACK.START_BUTTON')],
+  message: `
+    <div class="nback-intro">
+      <h1>${t('NBACK.WELCOME_TITLE')}</h1>
+      <p>${t('NBACK.WELCOME_MESSAGE')}</p>
+    </div>
+  `,
+  fullscreen_mode: true,
+});
 
 /**
- * Detailed task instructions
+ * Two-screen instruction sequence matching the study protocol.
+ * Screen 1: task description + rule emphasis + examples (n-level specific)
+ * Screen 2: speed/accuracy guidance + practice announcement
  */
 export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
   const { nLevel } = state.getNBackSettings();
@@ -39,32 +36,9 @@ export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
       choices: [t('NBACK.CONTINUE_BUTTON')],
       stimulus: `
         <div class="nback-instructions">
-          <h2>${t('NBACK.INSTRUCTIONS_TITLE')}</h2>
-          <p>${t('NBACK.INSTRUCTIONS_OVERVIEW')}</p>
-          <p>${t('NBACK.INSTRUCTIONS_SEQUENCE')}</p>
-        </div>
-      `,
-    },
-    {
-      type: HtmlButtonResponsePlugin,
-      choices: [t('NBACK.CONTINUE_BUTTON')],
-      stimulus: `
-        <div class="nback-instructions">
-          <h2>${t('NBACK.TASK_RULES_TITLE')}</h2>
-          <p>${t(`NBACK.TASK_RULES_${nLevel}`)}</p>
-          <p>${t(`NBACK.EXAMPLES_${nLevel}`)}</p>
-        </div>
-      `,
-    },
-    {
-      type: HtmlButtonResponsePlugin,
-      choices: [t('NBACK.CONTINUE_BUTTON')],
-      stimulus: `
-        <div class="nback-instructions">
-          <h2>${t('NBACK.RESPONSE_INSTRUCTIONS_TITLE')}</h2>
-          <p>${t('NBACK.RESPONSE_WHEN_MATCH')}</p>
-          <p>${t('NBACK.RESPONSE_WHEN_NO_MATCH')}</p>
-          <p class="important">${t('NBACK.SPEED_ACCURACY_BALANCE')}</p>
+          <p>${t(`NBACK.INSTRUCTIONS_INTRO_${nLevel}`)}</p>
+          <p class="important">${t(`NBACK.TASK_RULE_EMPHASIS_${nLevel}`)}</p>
+          ${t(`NBACK.EXAMPLES_${nLevel}`)}
         </div>
       `,
     },
@@ -73,9 +47,9 @@ export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
       choices: [t('NBACK.START_PRACTICE_BUTTON')],
       stimulus: `
         <div class="nback-instructions">
-          <h2>${t('NBACK.PRACTICE_INTRO_TITLE')}</h2>
-          <p>${t('NBACK.PRACTICE_INTRO_MESSAGE')}</p>
-          <p>${t('NBACK.READY_MESSAGE')}</p>
+          <p>${t('NBACK.SPEED_ACCURACY')}</p>
+          <p>${t('NBACK.DURATION')}</p>
+          <p class="important">${t(`NBACK.PRACTICE_REMINDER_${nLevel}`)}</p>
         </div>
       `,
     },
@@ -88,15 +62,11 @@ export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
 export const buildIntroduction = (state: ExperimentState): Timeline => {
   const instructionTimeline: Timeline = [];
 
-  // Skip instructions if configured
-  if (state.getGeneralSettings().skipInstructions) {
-    instructionTimeline.push(experimentBeginTrial(state));
-    return instructionTimeline;
-  }
+  instructionTimeline.push(experimentBeginTrial());
 
-  // Full introduction sequence
-  instructionTimeline.push(experimentBeginTrial(state));
-  instructionTimeline.push(...buildTaskInstructions(state));
+  if (!state.getGeneralSettings().skipInstructions) {
+    instructionTimeline.push(...buildTaskInstructions(state));
+  }
 
   return instructionTimeline;
 };

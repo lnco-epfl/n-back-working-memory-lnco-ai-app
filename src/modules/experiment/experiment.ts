@@ -16,12 +16,11 @@ import { DataCollection, JsPsych, initJsPsych } from 'jspsych';
 import { ExperimentResult } from '../config/appResults';
 import { AllSettingsType, NextStepSettings } from '../context/SettingsContext';
 import { ExperimentState } from './jspsych/experiment-state-class';
-import './jspsych/i18n';
+import i18n from './jspsych/i18n';
 import { buildIntroduction } from './parts/introduction';
 import { buildPractice } from './parts/practice';
 import { buildMainTask } from './parts/task-core';
 import './styles/main.scss';
-import { PROGRESS_BAR_MESSAGE } from './utils/constants';
 import { Timeline, Trial } from './utils/types';
 import { resolveLink } from './utils/utils';
 
@@ -58,6 +57,9 @@ export async function run({
   };
   updateData: (data: DataCollection, settings: AllSettingsType) => void;
 }): Promise<JsPsych> {
+  // Apply language setting before building any timeline strings.
+  await i18n.changeLanguage(input.settings.generalSettings.language ?? 'en');
+
   // Initialize experiment state
   const state = new ExperimentState(input.settings);
   const calibratedFontSize =
@@ -110,7 +112,7 @@ export async function run({
 
     if (progressBarContainer) {
       const fullscreenButton = document.createElement('button');
-      fullscreenButton.textContent = 'Fullscreen';
+      fullscreenButton.textContent = i18n.t('FULLSCREEN_BUTTON');
       fullscreenButton.className = 'jspsych-btn-progress-bar';
       fullscreenButton.style.marginLeft = '10px';
       fullscreenButton.style.cursor = 'pointer';
@@ -144,13 +146,13 @@ export async function run({
       const dropdown = document.createElement('select');
       dropdown.className = 'custom-dropdown';
       dropdown.innerHTML = `
-          <option value="small" ${calibratedFontSize === 'small' ? 'selected' : ''}>Small</option>
-          <option value="normal" ${calibratedFontSize === 'normal' ? 'selected' : ''}>Normal</option>
-          <option value="large" ${calibratedFontSize === 'large' ? 'selected' : ''}>Large</option>
-          <option value="extra-large" ${calibratedFontSize === 'extra-large' ? 'selected' : ''}>Extra Large</option>
+          <option value="small" ${calibratedFontSize === 'small' ? 'selected' : ''}>${i18n.t('FONT_SIZE_SMALL')}</option>
+          <option value="normal" ${calibratedFontSize === 'normal' ? 'selected' : ''}>${i18n.t('FONT_SIZE_NORMAL')}</option>
+          <option value="large" ${calibratedFontSize === 'large' ? 'selected' : ''}>${i18n.t('FONT_SIZE_LARGE')}</option>
+          <option value="extra-large" ${calibratedFontSize === 'extra-large' ? 'selected' : ''}>${i18n.t('FONT_SIZE_EXTRA_LARGE')}</option>
         `;
       const fontSizeTitle = document.createElement('span');
-      fontSizeTitle.innerHTML = 'Font Size:';
+      fontSizeTitle.innerHTML = i18n.t('FONT_SIZE_LABEL');
       fontSizeTitle.style.marginLeft = '10px';
       progressBar.appendChild(fontSizeTitle);
       progressBar.appendChild(dropdown);
@@ -167,7 +169,7 @@ export async function run({
   const jsPsych = initJsPsych({
     show_progress_bar: true,
     auto_update_progress_bar: false,
-    progress_bar_message: PROGRESS_BAR_MESSAGE,
+    progress_bar_message: i18n.t('PROGRESS_BAR_MESSAGE'),
     display_element: 'jspsych-display-element',
   });
 

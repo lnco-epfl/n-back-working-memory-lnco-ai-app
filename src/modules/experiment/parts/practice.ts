@@ -16,68 +16,88 @@ import { buildTaskInstructions } from './introduction';
 
 const t = i18n.t.bind(i18n);
 
+const addTrainingBanner = (): void => {
+  const progressBar = document.getElementById('jspsych-progressbar-container');
+  if (progressBar && !document.getElementById('nback-training-label')) {
+    const label = document.createElement('span');
+    label.id = 'nback-training-label';
+    label.className = 'nback-training-label';
+    label.textContent = t('PRACTICE.TRAINING_LABEL');
+    progressBar.prepend(label);
+  }
+};
+
+const removeTrainingBanner = (): void => {
+  document.getElementById('nback-training-label')?.remove();
+};
+
 /**
- * Build practice trials timeline
+ * Build practice trials timeline.
+ *
+ * Each loop iteration:
+ *   1. Reset metrics (+ show instructions again if this is a retry)
+ *   2. Practice trials (with TRAINING banner)
+ *   3. Feedback
+ *   4. Training-complete message (banner removed here)
+ *   5. Comprehension check
+ *
+ * Repeat condition: bad performance (0 hits OR false positives > targets)
+ *                   OR wrong comprehension answer — checked at end of each iteration.
+ * Both conditions independently trigger a retry, up to maxRepetitions total.
  */
 export const buildPractice = (
   state: ExperimentState,
   updateData?: (data: DataCollection, settings: AllSettingsType) => void,
   jsPsych?: JsPsych,
 ): Timeline => {
-  const practiceAttemptTimeline: Timeline = [];
-
-  // Skip practice if configured
   if (state.getGeneralSettings().skipPractice) {
-    return practiceAttemptTimeline;
+    return [];
   }
 
-  // Initialize practice sequence
   state.initializePracticeSequence();
 
-  // Get practice settings
-  const { displayDuration, interStimulusInterval, responseKey } =
+  const { displayDuration, interStimulusInterval, responseKey, nLevel } =
     state.getNBackSettings();
-
-  // Determine valid keyboard responses and mouse setting
   const validResponses = responseKey === 'mouse' ? 'NO_KEYS' : [' '];
   const allowMouse = responseKey !== 'space';
-
-  // Get the full sequence
   const sequence = state.getSequence();
   const configuredMaxRepetitions =
     state.getNBackSettings().numberOfPracticeRepetitionsAllowed;
   const maxRepetitions = Number.isFinite(configuredMaxRepetitions)
     ? Math.max(0, Math.floor(configuredMaxRepetitions))
     : 1;
-  let repetitionsUsed = 0;
 
-  // Reset practice counters at the start of each attempt.
-  practiceAttemptTimeline.push({
+  let repetitionsUsed = 0;
+  let shouldRepeat = false;
+
+  // ── Attempt timeline (runs once per loop iteration) ──────────────────────
+
+  const attemptTimeline: Timeline = [];
+
+  // Reset metrics and shouldRepeat flag at the start of each attempt.
+  attemptTimeline.push({
     type: htmlKeyboardResponse,
     stimulus: '',
-    choices: 'NO_KEYS',
+    choices: 'NO_KEYS' as const,
     trial_duration: 0,
     on_start: () => {
       state.resetPracticeMetrics();
+      shouldRepeat = false;
+      addTrainingBanner();
     },
   });
 
-  // If this is a repeated attempt, route participants through instructions again.
-  practiceAttemptTimeline.push({
+  // Show instructions again on retry attempts.
+  attemptTimeline.push({
     timeline: buildTaskInstructions(state),
     conditional_function: () => repetitionsUsed > 0,
   });
 
-  // Create practice trials
+  // Practice stimulus trials.
   for (let i = 0; i < sequence.length; i += 1) {
     const stimulus = sequence[i];
-    const correctResponse = isTargetTrial(
-      sequence,
-      i,
-      state.getNBackSettings().nLevel,
-    );
-
-    const trial = {
+    const correctResponse = isTargetTrial(sequence, i, nLevel);
+    attemptTimeline.push({
       type: NBackStimulusPlugin,
       stimulus,
       display_duration: displayDuration,
@@ -88,67 +108,74 @@ export const buildPractice = (
       trial_index: i,
       state,
       on_finish: () => {
-        // Save data after each trial
         if (updateData && jsPsych) {
           updateData(jsPsych.data.get(), state.getAllSettings());
         }
       },
-    };
-
-    practiceAttemptTimeline.push(trial);
+    });
   }
 
-  // Add feedback screen
-  practiceAttemptTimeline.push(practiceFeedbackTrial(state));
+  // Feedback screen.
+  attemptTimeline.push(practiceFeedbackTrial(state));
 
-  // Ask whether to continue or redo practice (if repetitions remain).
-  practiceAttemptTimeline.push({
+  // Training-complete message (also removes the TRAINING banner).
+  attemptTimeline.push({
     type: HtmlButtonResponsePlugin,
-    stimulus: () => {
-      const repetitionsRemaining = Math.max(
-        0,
-        maxRepetitions - repetitionsUsed,
-      );
-      const exhaustedMessage =
-        repetitionsRemaining === 0
-          ? `<p class="continue-prompt">${t('PRACTICE.RETRIES_EXHAUSTED')}</p>`
-          : '';
-
-      return `
-      <div class="nback-practice-repeat">
-        <h2>${t('PRACTICE.NEXT_STEP_TITLE')}</h2>
-        <p>${t('PRACTICE.NEXT_STEP_MESSAGE')}</p>
-        ${exhaustedMessage}
+    choices: [t('NBACK.CONTINUE_BUTTON')],
+    stimulus: `
+      <div class="nback-instructions">
+        <p>${t('PRACTICE.TRAINING_COMPLETE')}</p>
       </div>
-    `;
+    `,
+    on_start: () => {
+      removeTrainingBanner();
     },
-    choices: () => {
-      if (repetitionsUsed >= maxRepetitions) {
-        return [t('PRACTICE.CONTINUE_TO_MAIN')];
-      }
-      return [t('PRACTICE.CONTINUE_TO_MAIN'), t('PRACTICE.REDO_PRACTICE')];
-    },
+  });
+
+  // Comprehension check — always shown, every iteration.
+  attemptTimeline.push({
+    type: HtmlButtonResponsePlugin,
+    stimulus: `
+      <style>
+        #jspsych-html-button-response-btngroup {
+          align-items: flex-start !important;
+          width: 100%;
+          max-width: 600px;
+        }
+        #jspsych-html-button-response-btngroup .jspsych-btn {
+          text-align: left;
+          text-transform: none;
+          width: 100%;
+          white-space: normal;
+        }
+      </style>
+      <div class="nback-comprehension">
+        <h2>${t('PRACTICE.COMPREHENSION_QUESTION')}</h2>
+      </div>
+    `,
+    choices: [
+      t('PRACTICE.COMPREHENSION_A'),
+      t(`PRACTICE.COMPREHENSION_B_${nLevel}`),
+      t('PRACTICE.COMPREHENSION_C'),
+    ],
     on_finish: (data: unknown) => {
       const d = data as Record<string, unknown>;
-      const buttonPressed = Number(d.response);
-      const wantsRepeat =
-        repetitionsUsed < maxRepetitions && buttonPressed === 1;
-      d.repeat_practice = wantsRepeat;
-      if (wantsRepeat) {
+      const badPerformance =
+        state.getPracticeHitCount() === 0 ||
+        state.getPracticeFalsePositiveCount() > state.getPracticeTargetCount();
+      const wrongAnswer = d.response !== 1;
+      if ((badPerformance || wrongAnswer) && repetitionsUsed < maxRepetitions) {
+        shouldRepeat = true;
         repetitionsUsed += 1;
       }
     },
   });
 
+  // ── Loop ─────────────────────────────────────────────────────────────────
+
   const practiceLoop = {
-    timeline: practiceAttemptTimeline,
-    loop_function: (data: unknown) => {
-      const d = data as Record<string, unknown> & { values: () => unknown[] };
-      const lastTrial = d.values().slice(-1)[0] as
-        | Record<string, unknown>
-        | undefined;
-      return lastTrial?.repeat_practice === true;
-    },
+    timeline: attemptTimeline,
+    loop_function: () => shouldRepeat,
   };
 
   // Keep one lightweight transition screen to preserve current keyboard flow before main task.
