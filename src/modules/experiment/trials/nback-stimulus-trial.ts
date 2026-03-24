@@ -59,9 +59,8 @@ class NBackStimulusPlugin implements JsPsychPlugin<Info> {
 
   trial(displayElement: HTMLElement, trial: TrialType<Info>): void {
     const state = trial.state as ExperimentState;
-    const { fontSize } = state.getGeneralSettings();
     const element = displayElement;
-    element.className = `nback-trial font-${fontSize}`;
+    element.className = 'nback-trial';
 
     const stimulusDiv = document.createElement('div');
     stimulusDiv.className = 'nback-stimulus';

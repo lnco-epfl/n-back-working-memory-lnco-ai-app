@@ -1,3 +1,4 @@
+import HtmlButtonResponsePlugin from '@jspsych/plugin-html-button-response';
 import htmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response';
 import type { DataCollection, JsPsych } from 'jspsych';
 
@@ -11,6 +12,7 @@ import i18n from '../jspsych/i18n';
 import NBackStimulusPlugin from '../trials/nback-stimulus-trial';
 import { practiceFeedbackTrial } from '../trials/practice-feedback-trial';
 import { Timeline } from '../utils/types';
+import { buildTaskInstructions } from './introduction';
 
 const t = i18n.t.bind(i18n);
 
@@ -22,11 +24,11 @@ export const buildPractice = (
   updateData?: (data: DataCollection, settings: AllSettingsType) => void,
   jsPsych?: JsPsych,
 ): Timeline => {
-  const timeline: Timeline = [];
+  const practiceAttemptTimeline: Timeline = [];
 
   // Skip practice if configured
   if (state.getGeneralSettings().skipPractice) {
-    return timeline;
+    return practiceAttemptTimeline;
   }
 
   // Initialize practice sequence
@@ -42,6 +44,29 @@ export const buildPractice = (
 
   // Get the full sequence
   const sequence = state.getSequence();
+  const configuredMaxRepetitions =
+    state.getNBackSettings().numberOfPracticeRepetitionsAllowed;
+  const maxRepetitions = Number.isFinite(configuredMaxRepetitions)
+    ? Math.max(0, Math.floor(configuredMaxRepetitions))
+    : 1;
+  let repetitionsUsed = 0;
+
+  // Reset practice counters at the start of each attempt.
+  practiceAttemptTimeline.push({
+    type: htmlKeyboardResponse,
+    stimulus: '',
+    choices: 'NO_KEYS',
+    trial_duration: 0,
+    on_start: () => {
+      state.resetPracticeMetrics();
+    },
+  });
+
+  // If this is a repeated attempt, route participants through instructions again.
+  practiceAttemptTimeline.push({
+    timeline: buildTaskInstructions(state),
+    conditional_function: () => repetitionsUsed > 0,
+  });
 
   // Create practice trials
   for (let i = 0; i < sequence.length; i += 1) {
@@ -70,36 +95,54 @@ export const buildPractice = (
       },
     };
 
-    timeline.push(trial);
+    practiceAttemptTimeline.push(trial);
   }
 
   // Add feedback screen
-  timeline.push(practiceFeedbackTrial(state));
+  practiceAttemptTimeline.push(practiceFeedbackTrial(state));
 
-  // Option to repeat practice
-  timeline.push({
-    type: htmlKeyboardResponse,
-    stimulus: `
+  // Ask whether to continue or redo practice (if repetitions remain).
+  practiceAttemptTimeline.push({
+    type: HtmlButtonResponsePlugin,
+    stimulus: () => {
+      const repetitionsRemaining = Math.max(
+        0,
+        maxRepetitions - repetitionsUsed,
+      );
+      const exhaustedMessage =
+        repetitionsRemaining === 0
+          ? `<p class="continue-prompt">${t('PRACTICE.RETRIES_EXHAUSTED')}</p>`
+          : '';
+
+      return `
       <div class="nback-practice-repeat">
-        <h2>${t('PRACTICE.FEEDBACK_TITLE')}</h2>
-        <p>${t('PRACTICE.PRESS_TO_CONTINUE')}</p>
+        <h2>${t('PRACTICE.NEXT_STEP_TITLE')}</h2>
+        <p>${t('PRACTICE.NEXT_STEP_MESSAGE')}</p>
+        ${exhaustedMessage}
       </div>
-    `,
-    choices: ['r', ' '],
+    `;
+    },
+    choices: () => {
+      if (repetitionsUsed >= maxRepetitions) {
+        return [t('PRACTICE.CONTINUE_TO_MAIN')];
+      }
+      return [t('PRACTICE.CONTINUE_TO_MAIN'), t('PRACTICE.REDO_PRACTICE')];
+    },
     on_finish: (data: unknown) => {
-      // If 'r' was pressed, restart practice
       const d = data as Record<string, unknown>;
-      if (d.response === 'r') {
-        d.repeat_practice = true;
+      const buttonPressed = Number(d.response);
+      const wantsRepeat =
+        repetitionsUsed < maxRepetitions && buttonPressed === 1;
+      d.repeat_practice = wantsRepeat;
+      if (wantsRepeat) {
+        repetitionsUsed += 1;
       }
     },
   });
 
-  // Conditional repetition
   const practiceLoop = {
-    timeline,
+    timeline: practiceAttemptTimeline,
     loop_function: (data: unknown) => {
-      // Check the last trial for repeat_practice flag
       const d = data as Record<string, unknown> & { values: () => unknown[] };
       const lastTrial = d.values().slice(-1)[0] as
         | Record<string, unknown>
@@ -108,5 +151,17 @@ export const buildPractice = (
     },
   };
 
-  return [practiceLoop];
+  // Keep one lightweight transition screen to preserve current keyboard flow before main task.
+  const continueToMainTrial = {
+    type: htmlKeyboardResponse,
+    stimulus: `
+      <div class="nback-practice-repeat">
+        <h2>${t('PRACTICE.FEEDBACK_TITLE')}</h2>
+        <p>${t('PRACTICE.PRESS_TO_CONTINUE')}</p>
+      </div>
+    `,
+    choices: [' '],
+  };
+
+  return [practiceLoop, continueToMainTrial];
 };

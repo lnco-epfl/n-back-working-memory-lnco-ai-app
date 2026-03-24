@@ -346,6 +346,15 @@ export class ExperimentState {
     }
   }
 
+  resetPracticeMetrics(): void {
+    this.state.currentTrialIndex = 0;
+    this.state.practiceMode = true;
+    this.state.practiceResponses = [];
+    this.state.practiceTargetCount = 0;
+    this.state.practiceHitCount = 0;
+    this.state.practiceFalsePositiveCount = 0;
+  }
+
   getPracticeAccuracy(): number {
     if (this.state.practiceResponses.length === 0) {
       return 0;

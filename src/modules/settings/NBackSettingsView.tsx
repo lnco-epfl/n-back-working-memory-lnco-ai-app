@@ -79,6 +79,21 @@ const NBackSettingsView: FC<NBackSettingsViewProps> = ({
       <TextField
         fullWidth
         type="number"
+        label={t('SETTINGS.PRACTICE_REPETITIONS_ALLOWED')}
+        helperText={t('SETTINGS.PRACTICE_REPETITIONS_ALLOWED_HELP')}
+        value={nBackSettings.numberOfPracticeRepetitionsAllowed}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          handleChange(
+            'numberOfPracticeRepetitionsAllowed',
+            parseInt(e.target.value, 10),
+          )
+        }
+        inputProps={{ min: 0, max: 10 }}
+      />
+
+      <TextField
+        fullWidth
+        type="number"
         label={t('SETTINGS.DISPLAY_DURATION')}
         helperText={t('SETTINGS.DISPLAY_DURATION_HELP')}
         value={nBackSettings.displayDuration}

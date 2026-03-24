@@ -53,7 +53,12 @@
       "FALSE_POSITIVES": "False positives:",
       "CORRECT_COUNT": "Correct responses:",
       "ACCURACY": "Accuracy:",
-      "PRESS_TO_CONTINUE": "Press spacebar to continue to the main task"
+      "PRESS_TO_CONTINUE": "Press spacebar to continue to the main task",
+      "NEXT_STEP_TITLE": "What would you like to do next?",
+      "NEXT_STEP_MESSAGE": "You can continue to the main task or redo the practice section.",
+      "CONTINUE_TO_MAIN": "Continue to Main Task",
+      "REDO_PRACTICE": "Redo Practice",
+      "RETRIES_EXHAUSTED": "You have reached the maximum number of practice repetitions."
     },
     "MAIN_TASK": {
       "READY_TITLE": "Main Task Ready",
@@ -76,6 +81,8 @@
       "NBACK_LEVEL": "N-Back Level",
       "NUMBER_OF_TRIALS": "Number of Main Task Trials",
       "NUMBER_OF_PRACTICE_TRIALS": "Number of Practice Trials",
+      "PRACTICE_REPETITIONS_ALLOWED": "Allowed Practice Repetitions",
+      "PRACTICE_REPETITIONS_ALLOWED_HELP": "How many times practice can be repeated after the first run",
       "DISPLAY_DURATION": "Display Duration (ms)",
       "DISPLAY_DURATION_HELP": "How long each number is shown (100-2000 ms)",
       "ISI": "Inter-Stimulus Interval (ms)",

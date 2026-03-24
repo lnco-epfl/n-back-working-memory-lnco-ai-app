@@ -1,4 +1,3 @@
-import registerCodeCoverage from '@cypress/code-coverage/task';
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
@@ -11,12 +10,7 @@ export default defineConfig({
       VITE_GRAASP_APP_KEY: process.env.VITE_GRAASP_APP_KEY,
     },
     retries: { runMode: 1, openMode: 0 },
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      registerCodeCoverage(on, config);
-      return config;
-    },
+    // Coverage is handled by vite-plugin-istanbul and nyc
     baseUrl: `http://localhost:${process.env.VITE_PORT || 4001}`,
   },
 
