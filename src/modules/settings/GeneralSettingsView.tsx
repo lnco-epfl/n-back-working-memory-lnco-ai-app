@@ -24,6 +24,24 @@ const GeneralSettingsView: FC<GeneralSettingsViewProps> = ({
   <Stack spacing={1}>
     <Typography variant="h6">General Settings</Typography>
     <Stack spacing={0}>
+      <Typography variant="body1">Language</Typography>
+    </Stack>
+    <RadioGroup
+      aria-labelledby="language-group-label"
+      name="language-group"
+      row
+      value={generalSettings.language ?? 'en'}
+      onChange={(e) =>
+        onChange({
+          ...generalSettings,
+          language: e.target.value as 'en' | 'fr',
+        })
+      }
+    >
+      <FormControlLabel value="en" control={<Radio />} label="English" />
+      <FormControlLabel value="fr" control={<Radio />} label="Français" />
+    </RadioGroup>
+    <Stack spacing={0}>
       <Typography variant="body1">
         Set the font size of the experiment
       </Typography>

@@ -9,22 +9,18 @@ const t = i18n.t.bind(i18n);
 export const practiceFeedbackTrial = (state: ExperimentState): Trial => ({
   type: htmlKeyboardResponse,
   stimulus: () => {
-    const accuracy = state.getPracticeAccuracy();
-    const correct = state.getPracticeCorrectCount();
-    const total = state.getPracticeTotalCount();
     const hits = state.getPracticeHitCount();
     const targets = state.getPracticeTargetCount();
-    const falsePositives = state.getPracticeFalsePositiveCount();
+    const missed = targets - hits;
+    const wrongPresses = state.getPracticeFalsePositiveCount();
 
     return `
       <div class="nback-feedback">
         <h2>${t('PRACTICE.FEEDBACK_TITLE')}</h2>
-        <p>${t('PRACTICE.FEEDBACK_TEXT')}</p>
         <div class="feedback-stats">
-          <p><strong>${t('PRACTICE.HITS')}</strong> ${hits}/${targets}</p>
-          <p><strong>${t('PRACTICE.FALSE_POSITIVES')}</strong> ${falsePositives}</p>
-          <p><strong>${t('PRACTICE.CORRECT_COUNT')}</strong> ${correct}/${total}</p>
-          <p><strong>${t('PRACTICE.ACCURACY')}</strong> ${accuracy.toFixed(1)}%</p>
+          <p><strong>${t('PRACTICE.CORRECT_LABEL')}</strong> ${hits}/${targets}</p>
+          <p><strong>${t('PRACTICE.MISSED_LABEL')}</strong> ${missed}</p>
+          <p><strong>${t('PRACTICE.WRONG_PRESSES_LABEL')}</strong> ${wrongPresses}</p>
         </div>
         <p class="continue-prompt">${t('PRACTICE.PRESS_TO_CONTINUE')}</p>
       </div>
