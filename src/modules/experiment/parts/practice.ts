@@ -61,6 +61,29 @@ export const buildPractice = (
   const validResponses = responseKey === 'mouse' ? 'NO_KEYS' : [' '];
   const allowMouse = responseKey !== 'space';
   const sequence = state.getSequence();
+  const configuredMaxRepetitions =
+    state.getNBackSettings().numberOfPracticeRepetitionsAllowed;
+  const maxRepetitions = Number.isFinite(configuredMaxRepetitions)
+    ? Math.max(0, Math.floor(configuredMaxRepetitions))
+    : 1;
+  let repetitionsUsed = 0;
+
+  // Reset practice counters at the start of each attempt.
+  practiceAttemptTimeline.push({
+    type: htmlKeyboardResponse,
+    stimulus: '',
+    choices: 'NO_KEYS',
+    trial_duration: 0,
+    on_start: () => {
+      state.resetPracticeMetrics();
+    },
+  });
+
+  // If this is a repeated attempt, route participants through instructions again.
+  practiceAttemptTimeline.push({
+    timeline: buildTaskInstructions(state),
+    conditional_function: () => repetitionsUsed > 0,
+  });
 
   const configuredMaxRepetitions =
     state.getNBackSettings().numberOfPracticeRepetitionsAllowed;
@@ -179,5 +202,17 @@ export const buildPractice = (
     loop_function: () => shouldRepeat,
   };
 
-  return [practiceLoop];
+  // Keep one lightweight transition screen to preserve current keyboard flow before main task.
+  const continueToMainTrial = {
+    type: htmlKeyboardResponse,
+    stimulus: `
+      <div class="nback-practice-repeat">
+        <h2>${t('PRACTICE.FEEDBACK_TITLE')}</h2>
+        <p>${t('PRACTICE.PRESS_TO_CONTINUE')}</p>
+      </div>
+    `,
+    choices: [' '],
+  };
+
+  return [practiceLoop, continueToMainTrial];
 };
