@@ -66,30 +66,6 @@ export const buildPractice = (
   const maxRepetitions = Number.isFinite(configuredMaxRepetitions)
     ? Math.max(0, Math.floor(configuredMaxRepetitions))
     : 1;
-  let repetitionsUsed = 0;
-
-  // Reset practice counters at the start of each attempt.
-  practiceAttemptTimeline.push({
-    type: htmlKeyboardResponse,
-    stimulus: '',
-    choices: 'NO_KEYS',
-    trial_duration: 0,
-    on_start: () => {
-      state.resetPracticeMetrics();
-    },
-  });
-
-  // If this is a repeated attempt, route participants through instructions again.
-  practiceAttemptTimeline.push({
-    timeline: buildTaskInstructions(state),
-    conditional_function: () => repetitionsUsed > 0,
-  });
-
-  const configuredMaxRepetitions =
-    state.getNBackSettings().numberOfPracticeRepetitionsAllowed;
-  const maxRepetitions = Number.isFinite(configuredMaxRepetitions)
-    ? Math.max(0, Math.floor(configuredMaxRepetitions))
-    : 1;
 
   let repetitionsUsed = 0;
   let shouldRepeat = false;
