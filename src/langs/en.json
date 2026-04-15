@@ -16,7 +16,7 @@
       }
     },
     "NBACK": {
-      "WELCOME_TITLE": "N-Back Working Memory Task",
+      "WELCOME_TITLE": "Memory Task",
       "WELCOME_MESSAGE": "Click the button below to enter fullscreen and start.",
       "START_BUTTON": "Start Fullscreen",
       "CONTINUE_BUTTON": "Continue",
@@ -59,7 +59,8 @@
       "COMPREHENSION_B_3": "B) Press the SPACEBAR when the number is the same as the one shown three numbers earlier",
       "COMPREHENSION_B_4": "B) Press the SPACEBAR when the number is the same as the one shown four numbers earlier",
       "COMPREHENSION_C": "C) Press the SPACEBAR when two numbers appear in a row",
-      "COMPREHENSION_WRONG": "Incorrect. Please read the instructions carefully and try the training again."
+      "COMPREHENSION_WRONG": "Incorrect. Please read the instructions carefully and try the training again.",
+      "REPEAT_NOTICE": "We will repeat the training one more time."
     },
     "MAIN_TASK": {
       "READY_TITLE": "Ready!",
