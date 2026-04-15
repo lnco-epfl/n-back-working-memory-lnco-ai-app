@@ -87,6 +87,19 @@ export const buildPractice = (
     },
   });
 
+  // On retry, show an intermediate notice before re-entering instructions.
+  attemptTimeline.push({
+    timeline: [
+      {
+        type: HtmlButtonResponsePlugin,
+        stimulus: () =>
+          `<div class="nback-instructions"><p>${t('PRACTICE.REPEAT_NOTICE')}</p></div>`,
+        choices: [t('NBACK.CONTINUE_BUTTON')],
+      },
+    ],
+    conditional_function: () => repetitionsUsed > 0,
+  });
+
   // Show instructions again on retry attempts.
   attemptTimeline.push({
     timeline: buildTaskInstructions(state),

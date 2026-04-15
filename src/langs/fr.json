@@ -16,7 +16,7 @@
       }
     },
     "NBACK": {
-      "WELCOME_TITLE": "Tâche de Mémoire de Travail N-Back",
+      "WELCOME_TITLE": "Tâche de Mémoire",
       "WELCOME_MESSAGE": "Cliquez sur le bouton ci-dessous pour passer en plein écran et commencer.",
       "START_BUTTON": "Démarrer en plein écran",
       "CONTINUE_BUTTON": "Continuer",
@@ -59,7 +59,8 @@
       "COMPREHENSION_B_3": "B) Appuyer sur la barre ESPACE lorsque le chiffre est le même que celui présenté trois chiffres avant.",
       "COMPREHENSION_B_4": "B) Appuyer sur la barre ESPACE lorsque le chiffre est le même que celui présenté quatre chiffres avant.",
       "COMPREHENSION_C": "C) Appuyer sur la barre ESPACE lorsque deux chiffres apparaissent de manière consécutive.",
-      "COMPREHENSION_WRONG": "Incorrect. Veuillez relire les instructions attentivement et refaire l'entraînement."
+      "COMPREHENSION_WRONG": "Incorrect. Veuillez relire les instructions attentivement et refaire l'entraînement.",
+      "REPEAT_NOTICE": "Nous allons répéter l'entraînement une fois de plus."
     },
     "MAIN_TASK": {
       "READY_TITLE": "Prêt !",
