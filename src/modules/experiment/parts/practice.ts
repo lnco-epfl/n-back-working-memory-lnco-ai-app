@@ -191,17 +191,5 @@ export const buildPractice = (
     loop_function: () => shouldRepeat,
   };
 
-  // Keep one lightweight transition screen to preserve current keyboard flow before main task.
-  const continueToMainTrial = {
-    type: htmlKeyboardResponse,
-    stimulus: `
-      <div class="nback-practice-repeat">
-        <h2>${t('PRACTICE.FEEDBACK_TITLE')}</h2>
-        <p>${t('PRACTICE.PRESS_TO_CONTINUE')}</p>
-      </div>
-    `,
-    choices: [' '],
-  };
-
-  return [practiceLoop, continueToMainTrial];
+  return [practiceLoop];
 };
