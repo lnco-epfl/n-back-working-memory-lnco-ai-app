@@ -59,6 +59,7 @@
       "COMPREHENSION_B_3": "B) Appuyer sur la barre ESPACE lorsque le chiffre est le même que celui présenté trois chiffres avant.",
       "COMPREHENSION_B_4": "B) Appuyer sur la barre ESPACE lorsque le chiffre est le même que celui présenté quatre chiffres avant.",
       "COMPREHENSION_C": "C) Appuyer sur la barre ESPACE lorsque deux chiffres apparaissent de manière consécutive.",
+      "COMPREHENSION_WRONG": "Incorrect. Veuillez relire les instructions attentivement et refaire l'entraînement.",
       "REPEAT_NOTICE": "Nous allons répéter l'entraînement une fois de plus."
     },
     "MAIN_TASK": {
