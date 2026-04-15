@@ -169,7 +169,7 @@ export async function run({
   const jsPsych = initJsPsych({
     show_progress_bar: true,
     auto_update_progress_bar: false,
-    progress_bar_message: i18n.t('PROGRESS_BAR_MESSAGE'),
+    message_progress_bar: i18n.t('PROGRESS_BAR_MESSAGE'),
     display_element: 'jspsych-display-element',
   });
 

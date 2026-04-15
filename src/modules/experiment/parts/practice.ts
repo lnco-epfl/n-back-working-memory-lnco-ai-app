@@ -47,8 +47,8 @@ const removeTrainingBanner = (): void => {
  */
 export const buildPractice = (
   state: ExperimentState,
-  updateData?: (data: DataCollection, settings: AllSettingsType) => void,
-  jsPsych?: JsPsych,
+  updateData: (data: DataCollection, settings: AllSettingsType) => void,
+  jsPsych: JsPsych,
 ): Timeline => {
   if (state.getGeneralSettings().skipPractice) {
     return [];
@@ -68,7 +68,6 @@ export const buildPractice = (
     : 1;
 
   let repetitionsUsed = 0;
-  let shouldRepeat = false;
 
   // ── Attempt timeline (runs once per loop iteration) ──────────────────────
 
@@ -82,7 +81,6 @@ export const buildPractice = (
     trial_duration: 0,
     on_start: () => {
       state.resetPracticeMetrics();
-      shouldRepeat = false;
       addTrainingBanner();
     },
   });
@@ -171,14 +169,16 @@ export const buildPractice = (
       t(`PRACTICE.COMPREHENSION_B_${nLevel}`),
       t('PRACTICE.COMPREHENSION_C'),
     ],
-    on_finish: (data: unknown) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    on_finish: (data: any) => {
       const d = data as Record<string, unknown>;
       const badPerformance =
         state.getPracticeHitCount() === 0 ||
         state.getPracticeFalsePositiveCount() > state.getPracticeTargetCount();
       const wrongAnswer = d.response !== 1;
       if ((badPerformance || wrongAnswer) && repetitionsUsed < maxRepetitions) {
-        shouldRepeat = true;
+        // eslint-disable-next-line no-param-reassign
+        data.shouldRepeat = true;
         repetitionsUsed += 1;
       }
     },
@@ -188,20 +188,9 @@ export const buildPractice = (
 
   const practiceLoop = {
     timeline: attemptTimeline,
-    loop_function: () => shouldRepeat,
+    loop_function: () =>
+      jsPsych.data.get().last(1).values()[0].shouldRepeat === true,
   };
 
-  // Keep one lightweight transition screen to preserve current keyboard flow before main task.
-  const continueToMainTrial = {
-    type: htmlKeyboardResponse,
-    stimulus: `
-      <div class="nback-practice-repeat">
-        <h2>${t('PRACTICE.FEEDBACK_TITLE')}</h2>
-        <p>${t('PRACTICE.PRESS_TO_CONTINUE')}</p>
-      </div>
-    `,
-    choices: [' '],
-  };
-
-  return [practiceLoop, continueToMainTrial];
+  return [practiceLoop];
 };
