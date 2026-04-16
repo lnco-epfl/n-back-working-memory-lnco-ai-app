@@ -11,6 +11,7 @@ import {
 import i18n from '../jspsych/i18n';
 import NBackStimulusPlugin from '../trials/nback-stimulus-trial';
 import { practiceFeedbackTrial } from '../trials/practice-feedback-trial';
+import { FALSE_POSITIVE_PRACTICE } from '../utils/constants';
 import { Timeline } from '../utils/types';
 import { buildTaskInstructions } from './introduction';
 
@@ -174,7 +175,7 @@ export const buildPractice = (
       const d = data as Record<string, unknown>;
       const badPerformance =
         state.getPracticeHitCount() === 0 ||
-        state.getPracticeFalsePositiveCount() > state.getPracticeTargetCount();
+        state.getPracticeFalsePositiveCount() > FALSE_POSITIVE_PRACTICE;
       const wrongAnswer = d.response !== 1;
       if ((badPerformance || wrongAnswer) && repetitionsUsed < maxRepetitions) {
         // eslint-disable-next-line no-param-reassign
