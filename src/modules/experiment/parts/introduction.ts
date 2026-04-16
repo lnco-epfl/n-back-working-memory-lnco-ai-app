@@ -36,8 +36,11 @@ export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
       choices: [t('NBACK.CONTINUE_BUTTON')],
       stimulus: `
         <div class="nback-instructions">
+          <h2>${t('NBACK.INSTRUCTIONS_INTRO_TITLE')}</h2>
+
           <p>${t(`NBACK.INSTRUCTIONS_INTRO_${nLevel}`)}</p>
           <p class="important">${t(`NBACK.TASK_RULE_EMPHASIS_${nLevel}`)}</p>
+          <p>${t(`NBACK.EXAMPLE_INTRO`)}</p>
           ${t(`NBACK.EXAMPLES_${nLevel}`)}
         </div>
       `,
@@ -47,9 +50,10 @@ export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
       choices: [t('NBACK.START_PRACTICE_BUTTON')],
       stimulus: `
         <div class="nback-instructions">
-          <p>${t('NBACK.SPEED_ACCURACY')}</p>
+          <p>${t(`NBACK.PRACTICE_REMINDER_${nLevel}`)}</p>
           <p>${t('NBACK.DURATION')}</p>
-          <p class="important">${t(`NBACK.PRACTICE_REMINDER_${nLevel}`)}</p>
+          <p>${t('NBACK.SPEED_ACCURACY')}</p>
+          <p class="important">${t('NBACK.REMINDER_INSTRUCTIONS')}</p>
         </div>
       `,
     },
