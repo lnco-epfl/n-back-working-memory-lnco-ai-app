@@ -42,6 +42,8 @@ export const buildMainTask = (
       <div class="nback-ready">
         <h2>${t('MAIN_TASK.READY_TITLE')}</h2>
         <p>${t('MAIN_TASK.READY_MESSAGE')}</p>
+        <p>${t('MAIN_TASK.REMINDER_MAIN_TASK')}</p>
+        <p>${t('MAIN_TASK.READY_MESSAGE_2')}</p>
         <p class="continue-prompt">${t('MAIN_TASK.PRESS_TO_BEGIN')}</p>
       </div>
     `,

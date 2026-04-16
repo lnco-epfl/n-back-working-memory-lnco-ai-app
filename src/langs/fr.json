@@ -16,11 +16,13 @@
       }
     },
     "NBACK": {
-      "WELCOME_TITLE": "Tâche de Mémoire",
+      "WELCOME_TITLE": "Test de Mémoire",
       "WELCOME_MESSAGE": "Cliquez sur le bouton ci-dessous pour passer en plein écran et commencer.",
       "START_BUTTON": "Démarrer en plein écran",
       "CONTINUE_BUTTON": "Continuer",
       "START_PRACTICE_BUTTON": "Commencer l'entraînement",
+      "INSTRUCTIONS_INTRO_TITLE": "Instructions pour le test de mémoire",
+      "EXAMPLE_INTRO": "Voici quelques exemples pour vous familiariser. Vous ne devez rien faire pour le moment:",
       "INSTRUCTIONS_INTRO_1": "Dans ce test, vous verrez des chiffres apparaître un par un au centre de l'écran. Vous devez appuyer sur la barre <strong>ESPACE</strong> du clavier uniquement lorsque le chiffre que vous voyez est le même que celui présenté un chiffre avant. Si ce n'est pas le cas, vous ne faites rien.",
       "INSTRUCTIONS_INTRO_2": "Dans ce test, vous verrez des chiffres apparaître un par un au centre de l'écran. Vous devez appuyer sur la barre <strong>ESPACE</strong> du clavier uniquement lorsque le chiffre que vous voyez est le même que celui présenté deux chiffres avant. Si ce n'est pas le cas, vous ne faites rien.",
       "INSTRUCTIONS_INTRO_3": "Dans ce test, vous verrez des chiffres apparaître un par un au centre de l'écran. Vous devez appuyer sur la barre <strong>ESPACE</strong> du clavier uniquement lorsque le chiffre que vous voyez est le même que celui présenté trois chiffres avant. Si ce n'est pas le cas, vous ne faites rien.",
@@ -30,15 +32,16 @@
       "TASK_RULE_EMPHASIS_3": "Appuyez UNIQUEMENT si le chiffre est LE MÊME que celui présenté TROIS chiffres avant. Sinon, ne faites rien.",
       "TASK_RULE_EMPHASIS_4": "Appuyez UNIQUEMENT si le chiffre est LE MÊME que celui présenté QUATRE chiffres avant. Sinon, ne faites rien.",
       "EXAMPLES_1": "<div class='nback-examples'><p><strong>Exemple 1 :</strong></p><p class='sequence-display'><span class='nback-source'>4</span> &ndash; <span class='nback-target'>4</span></p><p>Les deux chiffres en rouge correspondent — le second 4 est le même que celui présenté un chiffre avant (le premier 4). Alors on appuie sur la barre ESPACE.</p><hr class='example-divider'><p><strong>Exemple 2 :</strong></p><p class='sequence-display'>3 &ndash; <span class='nback-source'>6</span> &ndash; <span class='nback-target'>6</span></p><p>Les deux chiffres en rouge correspondent — le second 6 est le même que celui présenté un chiffre avant (le premier 6). Alors on appuie sur la barre ESPACE.</p></div>",
-      "EXAMPLES_2": "<div class='nback-examples'><p><strong>Exemple 1 :</strong></p><p class='sequence-display'><span class='nback-source'>4</span> &ndash; 7 &ndash; <span class='nback-target'>4</span></p><p>Les deux chiffres en rouge correspondent — le second 4 est le même que celui présenté deux chiffres avant (le premier 4). Alors on appuie sur la barre ESPACE.</p><hr class='example-divider'><p><strong>Exemple 2 :</strong></p><p class='sequence-display'>3 &ndash; 6 &ndash; <span class='nback-source'>8</span> &ndash; 3 &ndash; <span class='nback-target'>8</span> &ndash; 9</p><p>Les deux chiffres en rouge correspondent — le second 8 est le même que celui présenté deux chiffres avant (le premier 8). Alors on appuie sur la barre ESPACE.</p></div>",
+      "EXAMPLES_2": "<div class='nback-examples'><p><strong>Exemple 1 :</strong></p><p class='sequence-display'><span class='nback-source'>4</span> &ndash; 7 &ndash; <span class='nback-target'>4</span></p><p>Le chiffre 4 (encerclé en rouge) est le même que celui présenté deux chiffres avant (4, encerclé en noir). C’est donc la cible. Alors on appuie sur la barre ESPACE.</p><hr class='example-divider'><p><strong>Exemple 2 :</strong></p><p class='sequence-display'>3 &ndash; 6 &ndash; <span class='nback-source'>8</span> &ndash; 3 &ndash; <span class='nback-target'>8</span> &ndash; 9</p><p>Ici, le chiffre 8 (encerclé en rouge) est le même que celui présenté deux chiffres avant (8, encerclé en noir). C’est la cible. Alors on appuie sur la barre ESPACE.</p></div>",
       "EXAMPLES_3": "<div class='nback-examples'><p><strong>Exemple 1 :</strong></p><p class='sequence-display'><span class='nback-source'>5</span> &ndash; 2 &ndash; 8 &ndash; <span class='nback-target'>5</span></p><p>Les deux chiffres en rouge correspondent — le second 5 est le même que celui présenté trois chiffres avant (le premier 5). Alors on appuie sur la barre ESPACE.</p><hr class='example-divider'><p><strong>Exemple 2 :</strong></p><p class='sequence-display'>2 &ndash; <span class='nback-source'>7</span> &ndash; 5 &ndash; 8 &ndash; <span class='nback-target'>7</span> &ndash; 3</p><p>Les deux chiffres en rouge correspondent — le second 7 est le même que celui présenté trois chiffres avant (le premier 7). Alors on appuie sur la barre ESPACE.</p></div>",
       "EXAMPLES_4": "<div class='nback-examples'><p><strong>Exemple 1 :</strong></p><p class='sequence-display'><span class='nback-source'>1</span> &ndash; 4 &ndash; 7 &ndash; 2 &ndash; <span class='nback-target'>1</span></p><p>Les deux chiffres en rouge correspondent — le second 1 est le même que celui présenté quatre chiffres avant (le premier 1). Alors on appuie sur la barre ESPACE.</p><hr class='example-divider'><p><strong>Exemple 2 :</strong></p><p class='sequence-display'>3 &ndash; <span class='nback-source'>5</span> &ndash; 8 &ndash; 2 &ndash; 6 &ndash; <span class='nback-target'>5</span></p><p>Les deux chiffres en rouge correspondent — le second 5 est le même que celui présenté quatre chiffres avant (le premier 5). Alors on appuie sur la barre ESPACE.</p></div>",
       "SPEED_ACCURACY": "Répondez le plus précisément et rapidement possible. La vitesse est importante, mais il est plus important d'être précis. Les erreurs sont normales et attendues, ne vous inquiétez pas si vous vous trompez. Faites au mieux.",
       "DURATION": "Le test réel va durer environ 5 minutes.",
       "PRACTICE_REMINDER_1": "Avant de commencer le test, nous allons faire un court entraînement. Rappel : Appuyez sur la barre ESPACE uniquement lorsque le chiffre que vous voyez est le même que celui présenté UN chiffre avant. Sinon, ne faites rien.",
-      "PRACTICE_REMINDER_2": "Avant de commencer le test, nous allons faire un court entraînement. Rappel : Appuyez sur la barre ESPACE du clavier uniquement lorsque le chiffre que vous voyez est le même que celui présenté deux chiffres avant. Sinon, ne faites rien.",
+      "PRACTICE_REMINDER_2": "Avant de commencer le test, nous allons faire un court entraînement.",
       "PRACTICE_REMINDER_3": "Avant de commencer le test, nous allons faire un court entraînement. Rappel : Appuyez sur la barre ESPACE uniquement lorsque le chiffre que vous voyez est le même que celui présenté TROIS chiffres avant. Sinon, ne faites rien.",
-      "PRACTICE_REMINDER_4": "Avant de commencer le test, nous allons faire un court entraînement. Rappel : Appuyez sur la barre ESPACE uniquement lorsque le chiffre que vous voyez est le même que celui présenté QUATRE chiffres avant. Sinon, ne faites rien."
+      "PRACTICE_REMINDER_4": "Avant de commencer le test, nous allons faire un court entraînement. Rappel : Appuyez sur la barre ESPACE uniquement lorsque le chiffre que vous voyez est le même que celui présenté QUATRE chiffres avant. Sinon, ne faites rien.",
+      "REMINDER_INSTRUCTIONS": "Rappel : Appuyez sur la barre ESPACE du clavier uniquement lorsque le chiffre que vous voyez est le même que celui présenté deux chiffres avant. Sinon, ne faites rien."
     },
     "PRACTICE": {
       "FEEDBACK_TITLE": "Résultats de l'entraînement",
@@ -63,11 +66,13 @@
       "REPEAT_NOTICE": "Nous allons répéter l'entraînement une fois de plus."
     },
     "MAIN_TASK": {
-      "READY_TITLE": "Prêt !",
-      "READY_MESSAGE": "Nous allons maintenant commencer le vrai test. Êtes-vous prêt-e ? Allez-y, faites au mieux !",
+      "READY_TITLE": "Fin de l’entraînement !",
+      "READY_MESSAGE": "<p>Nous allons maintenant passer au vrai test. Vos réponses « correctes » ou « incorrectes » ne seront pas affichées. </p><p>Répondez le plus précisément et rapidement possible. La vitesse est importante, mais il est plus important d’être précis.</p><p>Les erreurs sont normales et attendues, ne vous inquiétez pas si vous vous trompez. Faites au mieux.</p>",
+      "REMINDER_MAIN_TASK": "<p class=\"important\">Rappelez-vous :<br> Pour donner votre réponse, appuyez sur la barre ESPACE du clavier <strong>uniquement</strong> lorsque le chiffre que vous voyez est <strong>le même</strong> que celui <strong>présenté deux chiffres avant</strong>.</p>",
+      "READY_MESSAGE_2": "Êtes-vous prêt-e ? Allons-y, faites au mieux !",
       "PRESS_TO_BEGIN": "Appuyez sur la barre d'espace pour commencer.",
-      "COMPLETE_TITLE": "Tâche Complète",
-      "COMPLETE_MESSAGE": "Félicitations ! Vous avez complété la tâche n-back.",
+      "COMPLETE_TITLE": "Fin du test de mémoire",
+      "COMPLETE_MESSAGE": "Très bien !",
       "PRESS_TO_CONTINUE": "Appuyez sur la barre d'espace pour continuer"
     },
     "BREAK": {
