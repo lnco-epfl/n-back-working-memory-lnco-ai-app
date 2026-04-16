@@ -9,6 +9,8 @@ export type RewardType = 'low' | 'medium' | 'high';
 export const LOADING_BAR_SPEED_NO = 50;
 export const LOADING_BAR_SPEED_YES = 5;
 
+export const FALSE_POSITIVE_PRACTICE = 5;
+
 export const AUTO_DECREASE_AMOUNT = 2;
 export const AUTO_DECREASE_RATE = 100;
 export const AUTO_INCREASE_AMOUNT = 10;

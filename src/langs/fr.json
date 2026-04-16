@@ -55,7 +55,7 @@
       "TRAINING_COMPLETE_REMINDER_2": "Rappel : Pour donner votre réponse, appuyez sur la barre ESPACE du clavier uniquement lorsque le chiffre que vous voyez est le même que celui présenté deux chiffres avant. Sinon, ne faites rien.",
       "TRAINING_COMPLETE_REMINDER_3": "Rappel : Appuyez sur la barre ESPACE uniquement lorsque le chiffre que vous voyez est le même que celui présenté TROIS chiffres avant. Sinon, ne faites rien.",
       "TRAINING_COMPLETE_REMINDER_4": "Rappel : Appuyez sur la barre ESPACE uniquement lorsque le chiffre que vous voyez est le même que celui présenté QUATRE chiffres avant. Sinon, ne faites rien.",
-      "COMPREHENSION_QUESTION": "Nous allons vérifier si vous avez bien compris ce qu'il fallait faire. Que devez-vous faire dans ce test ?",
+      "COMPREHENSION_QUESTION": "Nous allons vérifier si vous avez bien compris ce qu'il fallait faire.<br /> Que devez-vous faire dans ce test ?",
       "COMPREHENSION_A": "A) Appuyer sur la barre ESPACE à chaque fois qu'un chiffre apparaît.",
       "COMPREHENSION_B_1": "B) Appuyer sur la barre ESPACE lorsque le chiffre est le même que celui présenté un chiffre avant.",
       "COMPREHENSION_B_2": "B) Appuyer sur la barre ESPACE lorsque le chiffre est le même que celui présenté deux chiffres avant.",
