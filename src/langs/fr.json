@@ -67,7 +67,7 @@
     },
     "MAIN_TASK": {
       "READY_TITLE": "Fin de l’entraînement !",
-      "READY_MESSAGE": "<p>Nous allons maintenant passer au vrai test. Vos réponses « correctes » ou « incorrectes » ne seront pas affichées. </p><p>Répondez le plus précisément et rapidement possible. La vitesse est importante, mais il est plus important d’être précis.</p><p>Les erreurs sont normales et attendues, ne vous inquiétez pas si vous vous trompez. Faites au mieux.</p>",
+      "READY_MESSAGE": "<p>Nous allons maintenant passer au vrai test. Vos réponses « correctes » ou « incorrectes » ne seront pas affichées. </p><p>Répondez le plus précisément et rapidement possible. La vitesse compte, mais il est plus important d’être précis.</p><p>Les erreurs sont normales et attendues, ne vous inquiétez pas si vous vous trompez. Faites au mieux.</p>",
       "REMINDER_MAIN_TASK": "<p class=\"important\">Rappelez-vous :<br> Pour donner votre réponse, appuyez sur la barre ESPACE du clavier <strong>uniquement</strong> lorsque le chiffre que vous voyez est <strong>le même</strong> que celui <strong>présenté deux chiffres avant</strong>.</p>",
       "READY_MESSAGE_2": "Êtes-vous prêt-e ? Allons-y, faites au mieux !",
       "PRESS_TO_BEGIN": "Appuyez sur la barre d'espace pour commencer.",
