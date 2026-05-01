@@ -35,7 +35,7 @@ const getEndPage = ({
 }: NextStepSettings): Trial => ({
   type: jsPsychHtmlKeyboardResponse,
   choices: 'NO_KEYS',
-  stimulus: `<div class='sd-html'><h3>${title}</h3><p>${Marked.parse(description)}</p><a class='link-to-experiment' target="_parent" href=${link}>${linkText}</a></div>`,
+  stimulus: `<h2>${title}</h2><p>${Marked.parse(description)}<a class='link-to-experiment' target="_parent" href=${link}>${linkText}</a></p>`,
 });
 
 /**

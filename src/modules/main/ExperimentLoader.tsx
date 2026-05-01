@@ -53,7 +53,7 @@ export const ExperimentLoader: FC = () => {
   };
 
   const assetPath = {
-    images: [],
+    images: ['assets/images/hand.png'],
     audio: [],
     video: [],
     misc: [],

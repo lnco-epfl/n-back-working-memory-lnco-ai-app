@@ -1,5 +1,7 @@
 {
   "translations": {
+    "SCROLL_DOWN": "↓ Scroll down",
+    "SCROLL_UP": "↑ Scroll up",
     "ERROR_BOUNDARY": {
       "FALLBACK": {
         "MESSAGE_TITLE": "Sorry, something went wrong with this application",

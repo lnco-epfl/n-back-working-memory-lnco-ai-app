@@ -5,7 +5,54 @@ body {
 
 @media (display-mode: fullscreen) {
   .player-view {
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.player-scroll-container {
+  flex: 1 1 100%;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Scroll hint buttons — shown only when content overflows the viewport */
+.scroll-hint {
+  position: fixed;
+  right: 32px;
+  z-index: 1000;
+  padding: 16px 28px;
+  background: rgba(44, 62, 80, 0.9);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+  user-select: none;
+
+  &:hover {
+    background: rgba(44, 62, 80, 1);
+    transform: scale(1.06);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &--down {
+    bottom: 32px;
+  }
+
+  &--up {
+    top: 90px;
   }
 }
 
@@ -47,6 +94,13 @@ body {
   font-size: calc(var(--font-scale) * 0.9rem);
 }
 
+.instructions-example-image {
+  display: block;
+  margin: 1rem auto;
+  width: calc(var(--font-scale) * 500px);
+  height: auto;
+}
+
 .jspsych-display-element {
   background-color: #ffffff;
   display: flex;
@@ -54,7 +108,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: inherit;
+  min-height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -93,6 +147,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
+  max-width: calc(var(--font-scale) * 600px) !important;
 }
 
 #thermometer {
@@ -415,7 +470,7 @@ ul li {
 .nback-ready,
 .nback-complete,
 .nback-practice-repeat {
-  max-width: 800px;
+  max-width: calc(var(--font-scale) * 800px);
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -497,7 +552,7 @@ ul li {
 .nback-examples {
   margin: 1.5rem auto;
   text-align: left;
-  max-width: 600px;
+  max-width: calc(var(--font-scale) * 600px);
   border-left: 4px solid #1976d2;
   padding-left: 1rem;
 }
@@ -510,7 +565,7 @@ ul li {
 
 /* Comprehension check question container */
 .nback-comprehension {
-  max-width: 800px;
+  max-width: calc(var(--font-scale) * 800px);
   margin: 0 auto;
   padding: 1rem 2rem 0;
   text-align: center;
