@@ -5,7 +5,54 @@ body {
 
 @media (display-mode: fullscreen) {
   .player-view {
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.player-scroll-container {
+  flex: 1 1 100%;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Scroll hint buttons — shown only when content overflows the viewport */
+.scroll-hint {
+  position: fixed;
+  right: 32px;
+  z-index: 1000;
+  padding: 16px 28px;
+  background: rgba(44, 62, 80, 0.9);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+  user-select: none;
+
+  &:hover {
+    background: rgba(44, 62, 80, 1);
+    transform: scale(1.06);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &--down {
+    bottom: 32px;
+  }
+
+  &--up {
+    top: 90px;
   }
 }
 
@@ -61,7 +108,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: inherit;
+  min-height: 100%;
   margin: 0;
   padding: 0;
 }

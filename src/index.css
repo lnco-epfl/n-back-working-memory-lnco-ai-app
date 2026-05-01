@@ -1,6 +1,9 @@
 @media not all and (display-mode: fullscreen) {
   .player-view {
-    height: 100%;
+    min-height: 600px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     background-color: #ffffff;
   }
 }
