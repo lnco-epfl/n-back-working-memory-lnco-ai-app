@@ -12,7 +12,7 @@ const t = i18n.t.bind(i18n);
  */
 const experimentBeginTrial = (): Trial => ({
   type: FullscreenPlugin,
-  choices: [t('NBACK.START_BUTTON')],
+  button_label: t('NBACK.START_BUTTON'),
   message: `
     <div class="nback-intro">
       <h1>${t('NBACK.WELCOME_TITLE')}</h1>
