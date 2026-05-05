@@ -46,6 +46,7 @@ const getEndPage = ({
 export async function run({
   assetPaths,
   input,
+  narration,
   updateData,
 }: {
   assetPaths: { images: string[]; audio: string[]; video: string[] };
@@ -55,6 +56,7 @@ export async function run({
     participantName: string;
     screenCalibration?: ScreenCalibration;
   };
+  narration: import('text-to-speech-lnco-ai').AudioNarration;
   updateData: (data: DataCollection, settings: AllSettingsType) => void;
 }): Promise<JsPsych> {
   // Apply language setting before building any timeline strings.
@@ -187,7 +189,8 @@ export async function run({
 
   timeline.push({
     type: PreloadPlugin,
-    assetPaths,
+    images: assetPaths.images,
+    audio: assetPaths.audio,
     max_load_time: 120000,
     on_load() {
       addFullscreenButton();
@@ -197,7 +200,7 @@ export async function run({
 
   // Introduction
   timeline.push({
-    timeline: buildIntroduction(state),
+    timeline: buildIntroduction(state, narration),
     on_timeline_start() {
       if (jsPsych.progressBar) jsPsych.progressBar.progress = 0.0;
     },
@@ -206,7 +209,12 @@ export async function run({
   // Practice
   if (!state.getGeneralSettings().skipPractice) {
     timeline.push({
-      timeline: buildPractice(state, updateDataWithSettings, jsPsych),
+      timeline: buildPractice(
+        state,
+        updateDataWithSettings,
+        jsPsych,
+        narration,
+      ),
       on_timeline_start() {
         if (jsPsych.progressBar) jsPsych.progressBar.progress = 0.2;
       },
@@ -215,7 +223,7 @@ export async function run({
 
   // Main task
   timeline.push({
-    timeline: buildMainTask(state, updateDataWithSettings, jsPsych),
+    timeline: buildMainTask(state, updateDataWithSettings, jsPsych, narration),
     on_timeline_start() {
       state.startMainTask();
       if (jsPsych.progressBar) {

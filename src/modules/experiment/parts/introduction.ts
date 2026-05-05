@@ -1,5 +1,7 @@
 import FullscreenPlugin from '@jspsych/plugin-fullscreen';
 import HtmlButtonResponsePlugin from '@jspsych/plugin-html-button-response';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AudioNarration } from 'text-to-speech-lnco-ai';
 
 import { ExperimentState } from '../jspsych/experiment-state-class';
 import i18n from '../jspsych/i18n';
@@ -27,7 +29,10 @@ const experimentBeginTrial = (): Trial => ({
  * Screen 1: task description + rule emphasis + examples (n-level specific)
  * Screen 2: speed/accuracy guidance + practice announcement
  */
-export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
+export const buildTaskInstructions = (
+  state: ExperimentState,
+  narration: AudioNarration,
+): Trial[] => {
   const { nLevel } = state.getNBackSettings();
 
   return [
@@ -45,6 +50,12 @@ export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
           ${t(`NBACK.EXAMPLES_${nLevel}`)}
         </div>
       `,
+      on_start() {
+        narration.play('assets/audio/nback_instructions_intro.mp3');
+      },
+      on_finish() {
+        narration.stop();
+      },
     },
     {
       type: HtmlButtonResponsePlugin,
@@ -57,6 +68,12 @@ export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
           <p class="important">${t('NBACK.REMINDER_INSTRUCTIONS')}</p>
         </div>
       `,
+      on_start() {
+        narration.play('assets/audio/nback_instructions_practice.mp3');
+      },
+      on_finish() {
+        narration.stop();
+      },
     },
   ];
 };
@@ -64,13 +81,16 @@ export const buildTaskInstructions = (state: ExperimentState): Trial[] => {
 /**
  * Build introduction timeline
  */
-export const buildIntroduction = (state: ExperimentState): Timeline => {
+export const buildIntroduction = (
+  state: ExperimentState,
+  narration: AudioNarration,
+): Timeline => {
   const instructionTimeline: Timeline = [];
 
   instructionTimeline.push(experimentBeginTrial());
 
   if (!state.getGeneralSettings().skipInstructions) {
-    instructionTimeline.push(...buildTaskInstructions(state));
+    instructionTimeline.push(...buildTaskInstructions(state, narration));
   }
 
   return instructionTimeline;

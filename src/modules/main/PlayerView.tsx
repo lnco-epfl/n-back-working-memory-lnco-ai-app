@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AudioNarration, AudioNarrationControls } from 'text-to-speech-lnco-ai';
+
 import { PLAYER_VIEW_CY } from '@/config/selectors';
 
 import { ExperimentLoader } from './ExperimentLoader';
 
 const PlayerView = (): JSX.Element => {
   const { t } = useTranslation();
+  const narration = useRef(new AudioNarration()).current;
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollUp, setCanScrollUp] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(false);
@@ -61,8 +65,9 @@ const PlayerView = (): JSX.Element => {
   return (
     <div data-cy={PLAYER_VIEW_CY} className="player-view">
       <div ref={scrollRef} className="player-scroll-container">
-        <ExperimentLoader />
+        <ExperimentLoader narration={narration} />
       </div>
+      <AudioNarrationControls narration={narration} position="bottom-right" />
       {canScrollDown && (
         <button
           type="button"
