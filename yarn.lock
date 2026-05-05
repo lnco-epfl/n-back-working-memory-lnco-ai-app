@@ -16345,11 +16345,11 @@ __metadata:
 
 "text-to-speech-lnco-ai@github:lnco-epfl/text-to-speech-lnco-ai-app":
   version: 1.0.0
-  resolution: "text-to-speech-lnco-ai@https://github.com/lnco-epfl/text-to-speech-lnco-ai-app.git#commit=16703ed03a0bf7f0533c3bb57fd0a3e3304a1505"
+  resolution: "text-to-speech-lnco-ai@https://github.com/lnco-epfl/text-to-speech-lnco-ai-app.git#commit=4fbbde5667602f5b5714908c8ef1eb51e5522298"
   peerDependencies:
     react: ">=18.0.0"
     react-dom: ">=18.0.0"
-  checksum: 10/cdf35af435263149f215895a9e02ee8dc0eb953d6331f0f498729a8126640e876f0b2c72e5f8e6c025644bf43bc322581a8b98f3f0f76d490c06baa1a68b5f8c
+  checksum: 10/12f48c77c90edad9d1e173b881f3f1653644a1e567485d0904dad7273c79070a4b6b54a8be9273b72ae42a66121bbfd2881497832a3e65ea1f989dee92c9c06d
   languageName: node
   linkType: hard
 
