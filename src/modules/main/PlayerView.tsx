@@ -70,7 +70,7 @@ const PlayerView = (): JSX.Element => {
       <div ref={scrollRef} className="player-scroll-container">
         <ExperimentLoader narration={narration} />
       </div>
-      <AudioNarrationControls narration={narration} position="bottom-right" />
+      <AudioNarrationControls narration={narration} position="bottom-left" />
       {canScrollDown && (
         <button
           type="button"
