@@ -2,7 +2,7 @@ import HtmlButtonResponsePlugin from '@jspsych/plugin-html-button-response';
 import htmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response';
 import type { DataCollection, JsPsych } from 'jspsych';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { AudioNarration } from 'text-to-speech-lnco-ai';
+import { AudioNarration } from 'jspsych-audio-narration';
 
 import { AllSettingsType } from '@/modules/context/SettingsContext';
 

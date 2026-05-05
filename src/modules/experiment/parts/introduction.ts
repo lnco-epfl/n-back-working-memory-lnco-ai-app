@@ -1,7 +1,7 @@
 import FullscreenPlugin from '@jspsych/plugin-fullscreen';
 import HtmlButtonResponsePlugin from '@jspsych/plugin-html-button-response';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { AudioNarration } from 'text-to-speech-lnco-ai';
+import { AudioNarration } from 'jspsych-audio-narration';
 
 import { ExperimentState } from '../jspsych/experiment-state-class';
 import i18n from '../jspsych/i18n';

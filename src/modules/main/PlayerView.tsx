@@ -2,7 +2,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { AudioNarration, AudioNarrationControls } from 'text-to-speech-lnco-ai';
+import {
+  AudioNarration,
+  AudioNarrationControls,
+} from 'jspsych-audio-narration';
 
 import { PLAYER_VIEW_CY } from '@/config/selectors';
 

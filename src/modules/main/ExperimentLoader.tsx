@@ -6,7 +6,7 @@ import { useLocalContext } from '@graasp/apps-query-client';
 
 import { DataCollection, JsPsych } from 'jspsych';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { AudioNarration } from 'text-to-speech-lnco-ai';
+import { AudioNarration } from 'jspsych-audio-narration';
 
 import { hooks } from '@/config/queryClient';
 import { parseScreenCalibrationFromLocalContext } from '@/utils/screenCalibration';

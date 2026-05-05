@@ -12,6 +12,8 @@ import PreloadPlugin from '@jspsych/plugin-preload';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Marked } from '@ts-stack/markdown';
 import { DataCollection, JsPsych, initJsPsych } from 'jspsych';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AudioNarration } from 'jspsych-audio-narration';
 
 import { ExperimentResult } from '../config/appResults';
 import { AllSettingsType, NextStepSettings } from '../context/SettingsContext';
@@ -56,7 +58,7 @@ export async function run({
     participantName: string;
     screenCalibration?: ScreenCalibration;
   };
-  narration: import('text-to-speech-lnco-ai').AudioNarration;
+  narration: AudioNarration;
   updateData: (data: DataCollection, settings: AllSettingsType) => void;
 }): Promise<JsPsych> {
   // Apply language setting before building any timeline strings.
