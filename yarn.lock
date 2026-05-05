@@ -16345,7 +16345,7 @@ __metadata:
 
 "text-to-speech-lnco-ai@github:lnco-epfl/text-to-speech-lnco-ai-app":
   version: 1.0.0
-  resolution: "text-to-speech-lnco-ai@https://github.com/lnco-epfl/text-to-speech-lnco-ai-app.git#commit=c838ad336e2064d0050b4996b6c34f53fdbf2585"
+  resolution: "text-to-speech-lnco-ai@https://github.com/lnco-epfl/text-to-speech-lnco-ai-app.git#commit=16703ed03a0bf7f0533c3bb57fd0a3e3304a1505"
   peerDependencies:
     react: ">=18.0.0"
     react-dom: ">=18.0.0"
