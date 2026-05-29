@@ -5,6 +5,8 @@ import { Typography } from '@mui/material';
 import { useLocalContext } from '@graasp/apps-query-client';
 
 import { DataCollection, JsPsych } from 'jspsych';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AudioNarration } from 'jspsych-audio-narration';
 
 import { hooks } from '@/config/queryClient';
 import { parseScreenCalibrationFromLocalContext } from '@/utils/screenCalibration';
@@ -14,7 +16,11 @@ import useExperimentResults from '../context/ExperimentContext';
 import { AllSettingsType, useSettings } from '../context/SettingsContext';
 import { run } from '../experiment/experiment';
 
-export const ExperimentLoader: FC = () => {
+interface ExperimentLoaderProps {
+  narration: AudioNarration;
+}
+
+export const ExperimentLoader: FC<ExperimentLoaderProps> = ({ narration }) => {
   const settings = useSettings();
   const localContext = useLocalContext();
   const { accountId } = localContext;
@@ -54,7 +60,15 @@ export const ExperimentLoader: FC = () => {
 
   const assetPath = {
     images: ['assets/images/hand.png'],
-    audio: [],
+    audio: [
+      'assets/audio/nback_main_ending.mp3',
+      'assets/audio/nback_instructions_intro.mp3',
+      'assets/audio/nback_instructions_main.mp3',
+      'assets/audio/nback_instructions_practice.mp3',
+      'assets/audio/nback_practice_repeat.mp3',
+      'assets/audio/nback_practice_comprehension.mp3',
+      'assets/audio/nback_practice_complete.mp3',
+    ],
     video: [],
     misc: [],
   };
@@ -80,6 +94,7 @@ export const ExperimentLoader: FC = () => {
             participantName,
             screenCalibration,
           },
+          narration,
           // eslint-disable-next-line @typescript-eslint/no-shadow
           updateData: (data, settings) => updateData(data, settings),
         });
@@ -102,6 +117,7 @@ export const ExperimentLoader: FC = () => {
             participantName,
             screenCalibration,
           },
+          narration,
           // eslint-disable-next-line @typescript-eslint/no-shadow
           updateData: (data, settings) => updateData(data, settings),
         });

@@ -1,7 +1,5 @@
 {
   "translations": {
-    "SCROLL_DOWN": "↓ Défiler vers le bas",
-    "SCROLL_UP": "↑ Défiler vers le haut",
     "ERROR_BOUNDARY": {
       "FALLBACK": {
         "MESSAGE_TITLE": "Désolé, quelque chose s'est mal passé avec cette application",
@@ -37,6 +35,7 @@
       "EXAMPLES_2": "<div class='nback-examples'><p><strong>Exemple 1 :</strong></p><p class='sequence-display'><span class='nback-source'>4</span> &ndash; 7 &ndash; <span class='nback-target'>4</span></p><p>Le chiffre 4 (encerclé en rouge) est le même que celui présenté deux chiffres avant (4, encerclé en noir). C’est donc la cible. Alors on appuie sur la barre ESPACE.</p><hr class='example-divider'><p><strong>Exemple 2 :</strong></p><p class='sequence-display'>3 &ndash; 6 &ndash; <span class='nback-source'>8</span> &ndash; 3 &ndash; <span class='nback-target'>8</span> &ndash; 9</p><p>Ici, le chiffre 8 (encerclé en rouge) est le même que celui présenté deux chiffres avant (8, encerclé en noir). C’est la cible. Alors on appuie sur la barre ESPACE.</p></div>",
       "EXAMPLES_3": "<div class='nback-examples'><p><strong>Exemple 1 :</strong></p><p class='sequence-display'><span class='nback-source'>5</span> &ndash; 2 &ndash; 8 &ndash; <span class='nback-target'>5</span></p><p>Les deux chiffres en rouge correspondent — le second 5 est le même que celui présenté trois chiffres avant (le premier 5). Alors on appuie sur la barre ESPACE.</p><hr class='example-divider'><p><strong>Exemple 2 :</strong></p><p class='sequence-display'>2 &ndash; <span class='nback-source'>7</span> &ndash; 5 &ndash; 8 &ndash; <span class='nback-target'>7</span> &ndash; 3</p><p>Les deux chiffres en rouge correspondent — le second 7 est le même que celui présenté trois chiffres avant (le premier 7). Alors on appuie sur la barre ESPACE.</p></div>",
       "EXAMPLES_4": "<div class='nback-examples'><p><strong>Exemple 1 :</strong></p><p class='sequence-display'><span class='nback-source'>1</span> &ndash; 4 &ndash; 7 &ndash; 2 &ndash; <span class='nback-target'>1</span></p><p>Les deux chiffres en rouge correspondent — le second 1 est le même que celui présenté quatre chiffres avant (le premier 1). Alors on appuie sur la barre ESPACE.</p><hr class='example-divider'><p><strong>Exemple 2 :</strong></p><p class='sequence-display'>3 &ndash; <span class='nback-source'>5</span> &ndash; 8 &ndash; 2 &ndash; 6 &ndash; <span class='nback-target'>5</span></p><p>Les deux chiffres en rouge correspondent — le second 5 est le même que celui présenté quatre chiffres avant (le premier 5). Alors on appuie sur la barre ESPACE.</p></div>",
+      "CLICK_TO_CONTINUE": "Cliquez sur le bouton ci-dessous pour continuer.",
       "SPEED_ACCURACY": "Répondez le plus précisément et rapidement possible. La vitesse est importante, mais il est plus important d'être précis. Les erreurs sont normales et attendues, ne vous inquiétez pas si vous vous trompez. Faites au mieux.",
       "DURATION": "Le test réel va durer environ 5 minutes.",
       "PRACTICE_REMINDER_1": "Avant de commencer le test, nous allons faire un court entraînement. Rappel : Appuyez sur la barre ESPACE uniquement lorsque le chiffre que vous voyez est le même que celui présenté UN chiffre avant. Sinon, ne faites rien.",
@@ -57,7 +56,7 @@
       "TRAINING_COMPLETE_REMINDER_2": "Rappel : Pour donner votre réponse, appuyez sur la barre ESPACE du clavier uniquement lorsque le chiffre que vous voyez est le même que celui présenté deux chiffres avant. Sinon, ne faites rien.",
       "TRAINING_COMPLETE_REMINDER_3": "Rappel : Appuyez sur la barre ESPACE uniquement lorsque le chiffre que vous voyez est le même que celui présenté TROIS chiffres avant. Sinon, ne faites rien.",
       "TRAINING_COMPLETE_REMINDER_4": "Rappel : Appuyez sur la barre ESPACE uniquement lorsque le chiffre que vous voyez est le même que celui présenté QUATRE chiffres avant. Sinon, ne faites rien.",
-      "COMPREHENSION_QUESTION": "Nous allons vérifier si vous avez bien compris ce qu'il fallait faire.<br /> Que devez-vous faire dans ce test ?",
+      "COMPREHENSION_QUESTION": "<p>Nous allons vérifier si vous avez bien compris ce qu'il fallait faire.</p><h3>Que devez-vous faire dans ce test ?</h3>",
       "COMPREHENSION_A": "A) Appuyer sur la barre ESPACE à chaque fois qu'un chiffre apparaît.",
       "COMPREHENSION_B_1": "B) Appuyer sur la barre ESPACE lorsque le chiffre est le même que celui présenté un chiffre avant.",
       "COMPREHENSION_B_2": "B) Appuyer sur la barre ESPACE lorsque le chiffre est le même que celui présenté deux chiffres avant.",

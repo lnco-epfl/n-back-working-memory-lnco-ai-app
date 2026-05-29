@@ -1,6 +1,8 @@
 import HtmlButtonResponsePlugin from '@jspsych/plugin-html-button-response';
 import htmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response';
 import type { DataCollection, JsPsych } from 'jspsych';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AudioNarration } from 'jspsych-audio-narration';
 
 import { AllSettingsType } from '@/modules/context/SettingsContext';
 
@@ -50,6 +52,7 @@ export const buildPractice = (
   state: ExperimentState,
   updateData: (data: DataCollection, settings: AllSettingsType) => void,
   jsPsych: JsPsych,
+  narration: AudioNarration,
 ): Timeline => {
   if (state.getGeneralSettings().skipPractice) {
     return [];
@@ -92,8 +95,19 @@ export const buildPractice = (
       {
         type: HtmlButtonResponsePlugin,
         stimulus: () =>
-          `<div class="nback-instructions"><p>${t('PRACTICE.REPEAT_NOTICE')}</p></div>`,
+          `<div class="nback-instructions">
+            <p>${t('PRACTICE.REPEAT_NOTICE')}</p>
+            <p>${t(`NBACK.CLICK_TO_CONTINUE`)}</p>
+          </div>`,
         choices: [t('NBACK.CONTINUE_BUTTON')],
+        on_start() {
+          if (repetitionsUsed > 0) {
+            narration.play('assets/audio/nback_practice_repeat.mp3');
+          }
+        },
+        on_finish() {
+          narration.stop();
+        },
       },
     ],
     conditional_function: () => repetitionsUsed > 0,
@@ -101,7 +115,7 @@ export const buildPractice = (
 
   // Show instructions again on retry attempts.
   attemptTimeline.push({
-    timeline: buildTaskInstructions(state),
+    timeline: buildTaskInstructions(state, narration),
     conditional_function: () => repetitionsUsed > 0,
   });
 
@@ -137,10 +151,15 @@ export const buildPractice = (
     stimulus: `
       <div class="nback-instructions">
         <p>${t('PRACTICE.TRAINING_COMPLETE')}</p>
+        <p>${t(`NBACK.CLICK_TO_CONTINUE`)}</p>
       </div>
     `,
     on_start: () => {
       removeTrainingBanner();
+      narration.play('assets/audio/nback_practice_complete.mp3');
+    },
+    on_finish: () => {
+      narration.stop();
     },
   });
 
@@ -162,7 +181,7 @@ export const buildPractice = (
         }
       </style>
       <div class="nback-comprehension">
-        <h2>${t('PRACTICE.COMPREHENSION_QUESTION')}</h2>
+        ${t('PRACTICE.COMPREHENSION_QUESTION')}
       </div>
     `,
     choices: [
@@ -170,8 +189,12 @@ export const buildPractice = (
       t(`PRACTICE.COMPREHENSION_B_${nLevel}`),
       t('PRACTICE.COMPREHENSION_C'),
     ],
+    on_start() {
+      narration.play('assets/audio/nback_practice_comprehension.mp3');
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     on_finish: (data: any) => {
+      narration.stop();
       const d = data as Record<string, unknown>;
       const badPerformance =
         state.getPracticeHitCount() === 0 ||
