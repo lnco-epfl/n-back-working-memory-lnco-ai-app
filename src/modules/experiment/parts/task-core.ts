@@ -93,6 +93,7 @@ export const buildMainTask = (
       correctResponse = isTargetTrial(sequence, i, nLevel);
     }
 
+    const trialIndex = i;
     const trial = {
       type: NBackStimulusPlugin,
       stimulus,
@@ -104,7 +105,15 @@ export const buildMainTask = (
       trial_index: i,
       state,
       on_finish: () => {
-        // Save data after each trial
+        if (jsPsych.progressBar) {
+          const startProgress = 0.5;
+          const endProgress = 0.98;
+          // eslint-disable-next-line no-param-reassign
+          jsPsych.progressBar.progress =
+            startProgress +
+            ((trialIndex + 1) / sequence.length) *
+              (endProgress - startProgress);
+        }
         if (updateData && jsPsych) {
           updateData(jsPsych.data.get(), state.getAllSettings());
         }
