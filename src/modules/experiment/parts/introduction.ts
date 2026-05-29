@@ -48,6 +48,7 @@ export const buildTaskInstructions = (
           <p class="important">${t(`NBACK.TASK_RULE_EMPHASIS_${nLevel}`)}</p>
           <p>${t(`NBACK.EXAMPLE_INTRO`)}</p>
           ${t(`NBACK.EXAMPLES_${nLevel}`)}
+          ${t(`NBACK.CLICK_TO_CONTINUE`)}
         </div>
       `,
       on_start() {
@@ -66,6 +67,7 @@ export const buildTaskInstructions = (
           <p>${t('NBACK.DURATION')}</p>
           <p>${t('NBACK.SPEED_ACCURACY')}</p>
           <p class="important">${t('NBACK.REMINDER_INSTRUCTIONS')}</p>
+          ${t(`NBACK.CLICK_TO_CONTINUE`)}
         </div>
       `,
       on_start() {

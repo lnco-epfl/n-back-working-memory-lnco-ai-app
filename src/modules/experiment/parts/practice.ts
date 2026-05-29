@@ -95,7 +95,10 @@ export const buildPractice = (
       {
         type: HtmlButtonResponsePlugin,
         stimulus: () =>
-          `<div class="nback-instructions"><p>${t('PRACTICE.REPEAT_NOTICE')}</p></div>`,
+          `<div class="nback-instructions">
+            <p>${t('PRACTICE.REPEAT_NOTICE')}</p>
+            <p>${t(`NBACK.CLICK_TO_CONTINUE`)}</p>
+          </div>`,
         choices: [t('NBACK.CONTINUE_BUTTON')],
         on_start() {
           if (repetitionsUsed > 0) {
@@ -148,6 +151,7 @@ export const buildPractice = (
     stimulus: `
       <div class="nback-instructions">
         <p>${t('PRACTICE.TRAINING_COMPLETE')}</p>
+        <p>${t(`NBACK.CLICK_TO_CONTINUE`)}</p>
       </div>
     `,
     on_start: () => {
