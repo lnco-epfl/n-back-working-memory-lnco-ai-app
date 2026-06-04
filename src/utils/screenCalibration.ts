@@ -1,4 +1,4 @@
-import type { LocalContext, ScreenCalibration } from '@graasp/sdk';
+import type { LocalContext, ScreenCalibration } from '@lnco-ai/sdk';
 
 export const FONT_SIZE_OPTIONS = [
   'small',
@@ -8,6 +8,11 @@ export const FONT_SIZE_OPTIONS = [
 ] as const;
 
 export type FontSizeOption = (typeof FONT_SIZE_OPTIONS)[number];
+
+export type AppScreenCalibration = ScreenCalibration & {
+  participantId?: string;
+  participantCode?: string;
+};
 
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 3;
@@ -21,9 +26,12 @@ export const isValidCalibrationFontSize = (
   typeof value === 'string' &&
   FONT_SIZE_OPTIONS.includes(value as FontSizeOption);
 
+const isValidParticipantString = (value: unknown): value is string =>
+  typeof value === 'string' && value.length > 0;
+
 export const normalizeScreenCalibration = (
   source: unknown,
-): ScreenCalibration | undefined => {
+): AppScreenCalibration | undefined => {
   if (!source || typeof source !== 'object') {
     return undefined;
   }
@@ -31,6 +39,8 @@ export const normalizeScreenCalibration = (
   const calibration = source as {
     scale?: unknown;
     fontSize?: unknown;
+    participantId?: unknown;
+    participantCode?: unknown;
   };
 
   const scale = isValidCalibrationScale(calibration.scale)
@@ -39,17 +49,28 @@ export const normalizeScreenCalibration = (
   const fontSize = isValidCalibrationFontSize(calibration.fontSize)
     ? calibration.fontSize
     : undefined;
+  const participantId = isValidParticipantString(calibration.participantId)
+    ? calibration.participantId
+    : undefined;
+  const participantCode = isValidParticipantString(calibration.participantCode)
+    ? calibration.participantCode
+    : undefined;
 
-  if (scale === undefined && fontSize === undefined) {
+  if (
+    scale === undefined &&
+    fontSize === undefined &&
+    participantId === undefined &&
+    participantCode === undefined
+  ) {
     return undefined;
   }
 
-  return { scale, fontSize };
+  return { scale, fontSize, participantId, participantCode };
 };
 
 export const parseScreenCalibrationFromLocalContext = (
   localContext: Pick<LocalContext, 'screenCalibration'> | undefined,
-): ScreenCalibration | undefined => {
+): AppScreenCalibration | undefined => {
   if (!localContext) {
     return undefined;
   }

@@ -5,8 +5,6 @@
  *
  * @assets assets/
  */
-import type { ScreenCalibration } from '@graasp/sdk';
-
 import jsPsychHtmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response';
 import PreloadPlugin from '@jspsych/plugin-preload';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -14,6 +12,8 @@ import { Marked } from '@ts-stack/markdown';
 import { DataCollection, JsPsych, initJsPsych } from 'jspsych';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AudioNarration } from 'jspsych-audio-narration';
+
+import { AppScreenCalibration } from '@/utils/screenCalibration';
 
 import { ExperimentResult } from '../config/appResults';
 import { AllSettingsType, NextStepSettings } from '../context/SettingsContext';
@@ -56,7 +56,7 @@ export async function run({
     settings: AllSettingsType;
     results: ExperimentResult;
     participantName: string;
-    screenCalibration?: ScreenCalibration;
+    screenCalibration?: AppScreenCalibration;
   };
   narration: AudioNarration;
   updateData: (data: DataCollection, settings: AllSettingsType) => void;
@@ -176,6 +176,17 @@ export async function run({
     message_progress_bar: i18n.t('PROGRESS_BAR_MESSAGE'),
     display_element: 'jspsych-display-element',
   });
+
+  const participantProps: Record<string, string> = {};
+  if (input.screenCalibration?.participantId) {
+    participantProps.participantId = input.screenCalibration.participantId;
+  }
+  if (input.screenCalibration?.participantCode) {
+    participantProps.participantCode = input.screenCalibration.participantCode;
+  }
+  if (Object.keys(participantProps).length > 0) {
+    jsPsych.data.addProperties(participantProps);
+  }
 
   const blockUnload = (event: BeforeUnloadEvent): string => {
     event.preventDefault();
