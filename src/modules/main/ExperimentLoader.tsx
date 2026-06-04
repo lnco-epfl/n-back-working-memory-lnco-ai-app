@@ -2,8 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 
 import { Typography } from '@mui/material';
 
-import { useLocalContext } from '@graasp/apps-query-client';
-
+import { useLocalContext } from '@lnco-ai/apps-query-client';
 import { DataCollection, JsPsych } from 'jspsych';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AudioNarration } from 'jspsych-audio-narration';
