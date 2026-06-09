@@ -1,5 +1,7 @@
 {
   "translations": {
+    "SCROLL_DOWN": "↓ Défiler vers le bas",
+    "SCROLL_UP": "↑ Défiler vers le haut",
     "ERROR_BOUNDARY": {
       "FALLBACK": {
         "MESSAGE_TITLE": "Désolé, quelque chose s'est mal passé avec cette application",
