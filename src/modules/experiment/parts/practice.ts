@@ -11,6 +11,7 @@ import {
   isTargetTrial,
 } from '../jspsych/experiment-state-class';
 import i18n from '../jspsych/i18n';
+import { buildCountdown } from '../trials/countdown-trial';
 import NBackStimulusPlugin from '../trials/nback-stimulus-trial';
 import { practiceFeedbackTrial } from '../trials/practice-feedback-trial';
 import { FALSE_POSITIVE_PRACTICE } from '../utils/constants';
@@ -118,6 +119,9 @@ export const buildPractice = (
     timeline: buildTaskInstructions(state, narration),
     conditional_function: () => repetitionsUsed > 0,
   });
+
+  // Countdown before stimulus trials.
+  attemptTimeline.push(...buildCountdown(state));
 
   // Practice stimulus trials.
   for (let i = 0; i < sequence.length; i += 1) {

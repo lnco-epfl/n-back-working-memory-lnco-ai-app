@@ -3,6 +3,8 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { Typography } from '@mui/material';
 
 import { useLocalContext } from '@lnco-ai/apps-query-client';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Marked } from '@ts-stack/markdown';
 import { DataCollection, JsPsych } from 'jspsych';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AudioNarration } from 'jspsych-audio-narration';
@@ -14,6 +16,7 @@ import { TrialData } from '../config/appResults';
 import useExperimentResults from '../context/ExperimentContext';
 import { AllSettingsType, useSettings } from '../context/SettingsContext';
 import { run } from '../experiment/experiment';
+import { resolveLink } from '../experiment/utils/utils';
 
 interface ExperimentLoaderProps {
   narration: AudioNarration;
@@ -100,12 +103,30 @@ export const ExperimentLoader: FC<ExperimentLoaderProps> = ({ narration }) => {
       } else if (
         isCompleted(experimentResultsAppData.rawData.trials, settings)
       ) {
-        setCompletedContent(
-          <Typography variant="h5" style={{ backgroundColor: 'white' }}>
-            You have previously completed this experiment, please reach out to
-            the experimenter if this is not correct.
-          </Typography>,
-        );
+        const { nextStepSettings } = settings;
+        if (nextStepSettings.linkToNextPage) {
+          const { title, description, linkText } = nextStepSettings;
+          const href = resolveLink(nextStepSettings.link, participantName);
+          setCompletedContent(
+            <div style={{ backgroundColor: 'white', padding: '2rem' }}>
+              <h2>{title}</h2>
+              <p
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: Marked.parse(description) }}
+              />
+              <a className="link-to-experiment" target="_parent" href={href}>
+                {linkText}
+              </a>
+            </div>,
+          );
+        } else {
+          setCompletedContent(
+            <Typography variant="h5" style={{ backgroundColor: 'white' }}>
+              You have previously completed this experiment, please reach out to
+              the experimenter if this is not correct.
+            </Typography>,
+          );
+        }
       } else {
         // Allow restart for N-back
         jsPsychRef.current = run({

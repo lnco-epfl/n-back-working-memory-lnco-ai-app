@@ -79,6 +79,10 @@
       "COUNTDOWN": "Resuming in:",
       "PRESS_TO_CONTINUE": "Or press spacebar to continue immediately"
     },
+    "COUNTDOWN": {
+      "GET_READY": "Get ready...",
+      "GO": "Go!"
+    },
     "PROGRESS_BAR_MESSAGE": "Completion Progress",
     "FULLSCREEN_BUTTON": "Fullscreen",
     "FONT_SIZE_LABEL": "Font size:",

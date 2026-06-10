@@ -11,6 +11,7 @@ import {
 } from '../jspsych/experiment-state-class';
 import i18n from '../jspsych/i18n';
 import { breakTrial } from '../trials/break-trial';
+import { buildCountdown } from '../trials/countdown-trial';
 import NBackStimulusPlugin from '../trials/nback-stimulus-trial';
 import { Timeline } from '../utils/types';
 
@@ -58,6 +59,9 @@ export const buildMainTask = (
       narration.stop();
     },
   });
+
+  // Countdown before main trials.
+  timeline.push(...buildCountdown(state));
 
   // Get the full sequence
   const sequence = state.getSequence();

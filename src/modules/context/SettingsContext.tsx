@@ -8,6 +8,7 @@ export type GeneralSettingsType = {
   language: 'en' | 'fr';
   skipInstructions: boolean;
   skipPractice: boolean;
+  showCountdown: boolean;
 };
 
 export type NBackSettingsType = {
@@ -61,6 +62,7 @@ const defaultSettingsValues: AllSettingsType = {
     language: 'en',
     skipInstructions: false,
     skipPractice: false,
+    showCountdown: true,
   },
   nBackSettings: {
     nLevel: 2,
