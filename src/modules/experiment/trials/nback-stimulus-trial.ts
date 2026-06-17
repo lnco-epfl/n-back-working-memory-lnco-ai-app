@@ -1,6 +1,9 @@
 import { JsPsych, JsPsychPlugin, ParameterType, TrialType } from 'jspsych';
 
 import { ExperimentState } from '../jspsych/experiment-state-class';
+import i18n from '../jspsych/i18n';
+
+const t = i18n.t.bind(i18n);
 
 const info = {
   name: 'nback-stimulus',
@@ -37,6 +40,10 @@ const info = {
       type: ParameterType.COMPLEX,
       default: undefined,
     },
+    show_training_feedback: {
+      type: ParameterType.BOOL,
+      default: false,
+    },
   },
 };
 
@@ -44,8 +51,6 @@ type Info = typeof info;
 
 class NBackStimulusPlugin implements JsPsychPlugin<Info> {
   static info = info;
-
-  private display: HTMLElement | null = null;
 
   private responseAllowed = false;
 
@@ -59,8 +64,8 @@ class NBackStimulusPlugin implements JsPsychPlugin<Info> {
 
   trial(displayElement: HTMLElement, trial: TrialType<Info>): void {
     const state = trial.state as ExperimentState;
-    const element = displayElement;
-    element.className = 'nback-trial';
+    // eslint-disable-next-line no-param-reassign
+    displayElement.className = 'nback-trial';
 
     const stimulusDiv = document.createElement('div');
     stimulusDiv.className = 'nback-stimulus';
@@ -72,13 +77,38 @@ class NBackStimulusPlugin implements JsPsychPlugin<Info> {
     this.responseAllowed = true;
     this.startTime = performance.now();
 
+    type FeedbackType = 'hit' | 'false-positive' | 'miss';
+
+    const showFeedback = (type: FeedbackType): void => {
+      const feedbackDiv = document.createElement('div');
+      if (type === 'hit') {
+        feedbackDiv.className =
+          'nback-trial-feedback nback-trial-feedback--correct';
+        feedbackDiv.textContent = '✓';
+      } else {
+        feedbackDiv.className =
+          'nback-trial-feedback nback-trial-feedback--incorrect';
+        feedbackDiv.textContent =
+          type === 'miss'
+            ? t('PRACTICE.TRIAL_FEEDBACK_MISS')
+            : t('PRACTICE.TRIAL_FEEDBACK_FALSE_POSITIVE');
+      }
+      displayElement.appendChild(feedbackDiv);
+    };
+
+    const onResponse = (): void => {
+      this.responseGiven = true;
+      response = true;
+      this.responseTime = performance.now() - this.startTime;
+      if (trial.show_training_feedback) {
+        stimulusDiv.style.display = 'none';
+        showFeedback(trial.correct_response ? 'hit' : 'false-positive');
+      }
+    };
+
     const keyboardListener = (e: KeyboardEvent): void => {
       if (!this.responseAllowed || this.responseGiven) return;
-      if (trial.valid_responses.includes(e.key)) {
-        this.responseGiven = true;
-        response = true;
-        this.responseTime = performance.now() - this.startTime;
-      }
+      if (trial.valid_responses.includes(e.key)) onResponse();
     };
 
     const mouseListener = (): void => {
@@ -88,9 +118,7 @@ class NBackStimulusPlugin implements JsPsychPlugin<Info> {
         !trial.allow_mouse_response
       )
         return;
-      this.responseGiven = true;
-      response = true;
-      this.responseTime = performance.now() - this.startTime;
+      onResponse();
     };
 
     document.addEventListener('keydown', keyboardListener);
@@ -128,9 +156,40 @@ class NBackStimulusPlugin implements JsPsychPlugin<Info> {
         practice: state.isPracticeMode(),
       };
 
-      const el = displayElement;
-      el.innerHTML = '';
-      this.jsPsych.finishTrial(trialData);
+      const endTrial = (): void => {
+        // eslint-disable-next-line no-param-reassign
+        displayElement.innerHTML = '';
+        this.jsPsych.finishTrial(trialData);
+      };
+
+      const finishAfterBlank = (): void => {
+        // eslint-disable-next-line no-param-reassign
+        displayElement.innerHTML = '';
+        this.jsPsych.pluginAPI.setTimeout(endTrial, 500);
+      };
+
+      if (trial.show_training_feedback) {
+        if (!response && trial.correct_response) {
+          // Miss: show negative feedback now, then blank + finish
+          showFeedback('miss');
+          this.jsPsych.pluginAPI.setTimeout(finishAfterBlank, 1000);
+        } else if (response) {
+          // Hit or false positive: feedback shown since responseTime; ensure 1s total
+          const feedbackShownFor =
+            trial.inter_stimulus_interval - (this.responseTime ?? 0);
+          const remaining = Math.max(0, 1000 - feedbackShownFor);
+          if (remaining > 0) {
+            this.jsPsych.pluginAPI.setTimeout(finishAfterBlank, remaining);
+          } else {
+            finishAfterBlank();
+          }
+        } else {
+          // Correct ignore: no feedback, no blank
+          endTrial();
+        }
+      } else {
+        endTrial();
+      }
     }, trial.inter_stimulus_interval);
   }
 

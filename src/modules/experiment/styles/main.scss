@@ -578,6 +578,36 @@ ul li {
   margin: 1rem 0;
 }
 
+/* Per-trial training feedback (checkmark / text) */
+.nback-trial-feedback {
+  font-weight: bold;
+  margin-top: 1rem;
+  pointer-events: none;
+  text-align: center;
+  animation: nback-feedback-appear 0.15s ease-out;
+}
+
+.nback-trial-feedback--correct {
+  color: #2e7d32;
+  font-size: calc(var(--font-scale, 1) * 4rem);
+}
+
+.nback-trial-feedback--incorrect {
+  color: #c62828;
+  font-size: calc(var(--font-scale, 1) * 2rem);
+}
+
+@keyframes nback-feedback-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Comprehension check question container */
 .nback-comprehension {
   max-width: calc(var(--font-scale) * 800px);

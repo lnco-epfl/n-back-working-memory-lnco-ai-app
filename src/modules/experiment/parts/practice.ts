@@ -137,6 +137,7 @@ export const buildPractice = (
       correct_response: correctResponse,
       trial_index: i,
       state,
+      show_training_feedback: true,
       on_finish: () => {
         if (updateData && jsPsych) {
           updateData(jsPsych.data.get(), state.getAllSettings());

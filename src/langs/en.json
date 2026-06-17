@@ -62,7 +62,9 @@
       "COMPREHENSION_B_4": "B) Press the SPACEBAR when the number is the same as the one shown four numbers earlier",
       "COMPREHENSION_C": "C) Press the SPACEBAR when two numbers appear in a row",
       "COMPREHENSION_WRONG": "Incorrect. Please read the instructions carefully and try the training again.",
-      "REPEAT_NOTICE": "We will repeat the training one more time."
+      "REPEAT_NOTICE": "We will repeat the training one more time.",
+      "TRIAL_FEEDBACK_FALSE_POSITIVE": "Incorrect",
+      "TRIAL_FEEDBACK_MISS": "Miss"
     },
     "MAIN_TASK": {
       "READY_TITLE": "Ready!",
