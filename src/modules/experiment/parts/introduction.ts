@@ -44,7 +44,7 @@ export const buildTaskInstructions = (
           <h2>${t('NBACK.INSTRUCTIONS_INTRO_TITLE')}</h2>
 
           <p>${t(`NBACK.INSTRUCTIONS_INTRO_${nLevel}`)}</p>
-          <img src='assets/images/hand.png' alt="Spacebar Image" class="instructions-example-image" />
+          <img src='${t('NBACK.HAND_IMAGE')}' alt="Spacebar Image" class="instructions-example-image" />
           <p class="important">${t(`NBACK.TASK_RULE_EMPHASIS_${nLevel}`)}</p>
           <p>${t(`NBACK.EXAMPLE_INTRO`)}</p>
           ${t(`NBACK.EXAMPLES_${nLevel}`)}

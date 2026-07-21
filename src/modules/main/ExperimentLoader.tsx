@@ -16,6 +16,7 @@ import { TrialData } from '../config/appResults';
 import useExperimentResults from '../context/ExperimentContext';
 import { AllSettingsType, useSettings } from '../context/SettingsContext';
 import { run } from '../experiment/experiment';
+import i18n from '../experiment/jspsych/i18n';
 import { resolveLink } from '../experiment/utils/utils';
 
 interface ExperimentLoaderProps {
@@ -62,7 +63,7 @@ export const ExperimentLoader: FC<ExperimentLoaderProps> = ({ narration }) => {
   };
 
   const assetPath = {
-    images: ['assets/images/hand.png'],
+    images: [i18n.t('NBACK.HAND_IMAGE')],
     audio: [
       'assets/audio/nback_main_ending.mp3',
       'assets/audio/nback_instructions_intro.mp3',
