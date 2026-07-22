@@ -9,10 +9,12 @@ import {
 
 import { PLAYER_VIEW_CY } from '@/config/selectors';
 
+import { useSettings } from '../context/SettingsContext';
 import { ExperimentLoader } from './ExperimentLoader';
 
 const PlayerView = (): JSX.Element => {
   const { t } = useTranslation();
+  const { generalSettings } = useSettings();
   const narration = useRef(new AudioNarration()).current;
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollUp, setCanScrollUp] = useState(false);
@@ -70,7 +72,9 @@ const PlayerView = (): JSX.Element => {
       <div ref={scrollRef} className="player-scroll-container">
         <ExperimentLoader narration={narration} />
       </div>
-      <AudioNarrationControls narration={narration} position="bottom-left" />
+      {generalSettings.enableNarration && (
+        <AudioNarrationControls narration={narration} position="bottom-left" />
+      )}
       {canScrollDown && (
         <button
           type="button"

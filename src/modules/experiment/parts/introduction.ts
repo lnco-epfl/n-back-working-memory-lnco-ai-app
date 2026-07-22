@@ -1,11 +1,9 @@
 import FullscreenPlugin from '@jspsych/plugin-fullscreen';
 import HtmlButtonResponsePlugin from '@jspsych/plugin-html-button-response';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { AudioNarration } from 'jspsych-audio-narration';
 
 import { ExperimentState } from '../jspsych/experiment-state-class';
 import i18n from '../jspsych/i18n';
-import { Timeline, Trial } from '../utils/types';
+import { NarrationPlayer, Timeline, Trial } from '../utils/types';
 
 const t = i18n.t.bind(i18n);
 
@@ -31,7 +29,7 @@ const experimentBeginTrial = (): Trial => ({
  */
 export const buildTaskInstructions = (
   state: ExperimentState,
-  narration: AudioNarration,
+  narration: NarrationPlayer,
 ): Trial[] => {
   const { nLevel } = state.getNBackSettings();
 
@@ -85,7 +83,7 @@ export const buildTaskInstructions = (
  */
 export const buildIntroduction = (
   state: ExperimentState,
-  narration: AudioNarration,
+  narration: NarrationPlayer,
 ): Timeline => {
   const instructionTimeline: Timeline = [];
 

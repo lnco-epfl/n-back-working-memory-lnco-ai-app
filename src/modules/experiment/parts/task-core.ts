@@ -1,7 +1,5 @@
 import htmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response';
 import type { DataCollection, JsPsych } from 'jspsych';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { AudioNarration } from 'jspsych-audio-narration';
 
 import { AllSettingsType } from '@/modules/context/SettingsContext';
 
@@ -13,7 +11,7 @@ import i18n from '../jspsych/i18n';
 import { breakTrial } from '../trials/break-trial';
 import { buildCountdown } from '../trials/countdown-trial';
 import NBackStimulusPlugin from '../trials/nback-stimulus-trial';
-import { Timeline } from '../utils/types';
+import { NarrationPlayer, Timeline } from '../utils/types';
 
 const t = i18n.t.bind(i18n);
 
@@ -24,7 +22,7 @@ export const buildMainTask = (
   state: ExperimentState,
   updateData: (data: DataCollection, settings: AllSettingsType) => void,
   jsPsych: JsPsych,
-  narration: AudioNarration,
+  narration: NarrationPlayer,
 ): Timeline => {
   const timeline: Timeline = [];
 
