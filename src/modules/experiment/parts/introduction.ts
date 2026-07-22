@@ -1,11 +1,9 @@
 import FullscreenPlugin from '@jspsych/plugin-fullscreen';
 import HtmlButtonResponsePlugin from '@jspsych/plugin-html-button-response';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { AudioNarration } from 'jspsych-audio-narration';
 
 import { ExperimentState } from '../jspsych/experiment-state-class';
 import i18n from '../jspsych/i18n';
-import { Timeline, Trial } from '../utils/types';
+import { NarrationPlayer, Timeline, Trial } from '../utils/types';
 
 const t = i18n.t.bind(i18n);
 
@@ -31,7 +29,7 @@ const experimentBeginTrial = (): Trial => ({
  */
 export const buildTaskInstructions = (
   state: ExperimentState,
-  narration: AudioNarration,
+  narration: NarrationPlayer,
 ): Trial[] => {
   const { nLevel } = state.getNBackSettings();
 
@@ -44,7 +42,7 @@ export const buildTaskInstructions = (
           <h2>${t('NBACK.INSTRUCTIONS_INTRO_TITLE')}</h2>
 
           <p>${t(`NBACK.INSTRUCTIONS_INTRO_${nLevel}`)}</p>
-          <img src='assets/images/hand.png' alt="Spacebar Image" class="instructions-example-image" />
+          <img src='${t('NBACK.HAND_IMAGE')}' alt="Spacebar Image" class="instructions-example-image" />
           <p class="important">${t(`NBACK.TASK_RULE_EMPHASIS_${nLevel}`)}</p>
           <p>${t(`NBACK.EXAMPLE_INTRO`)}</p>
           ${t(`NBACK.EXAMPLES_${nLevel}`)}
@@ -85,7 +83,7 @@ export const buildTaskInstructions = (
  */
 export const buildIntroduction = (
   state: ExperimentState,
-  narration: AudioNarration,
+  narration: NarrationPlayer,
 ): Timeline => {
   const instructionTimeline: Timeline = [];
 

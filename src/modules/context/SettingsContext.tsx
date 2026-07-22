@@ -9,6 +9,7 @@ export type GeneralSettingsType = {
   skipInstructions: boolean;
   skipPractice: boolean;
   showCountdown: boolean;
+  enableNarration: boolean;
 };
 
 export type NBackSettingsType = {
@@ -63,6 +64,7 @@ const defaultSettingsValues: AllSettingsType = {
     skipInstructions: false,
     skipPractice: false,
     showCountdown: true,
+    enableNarration: true,
   },
   nBackSettings: {
     nLevel: 2,

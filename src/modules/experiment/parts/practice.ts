@@ -1,8 +1,6 @@
 import HtmlButtonResponsePlugin from '@jspsych/plugin-html-button-response';
 import htmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response';
 import type { DataCollection, JsPsych } from 'jspsych';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { AudioNarration } from 'jspsych-audio-narration';
 
 import { AllSettingsType } from '@/modules/context/SettingsContext';
 
@@ -15,7 +13,7 @@ import { buildCountdown } from '../trials/countdown-trial';
 import NBackStimulusPlugin from '../trials/nback-stimulus-trial';
 import { practiceFeedbackTrial } from '../trials/practice-feedback-trial';
 import { FALSE_POSITIVE_PRACTICE } from '../utils/constants';
-import { Timeline } from '../utils/types';
+import { NarrationPlayer, Timeline } from '../utils/types';
 import { buildTaskInstructions } from './introduction';
 
 const t = i18n.t.bind(i18n);
@@ -53,7 +51,7 @@ export const buildPractice = (
   state: ExperimentState,
   updateData: (data: DataCollection, settings: AllSettingsType) => void,
   jsPsych: JsPsych,
-  narration: AudioNarration,
+  narration: NarrationPlayer,
 ): Timeline => {
   if (state.getGeneralSettings().skipPractice) {
     return [];

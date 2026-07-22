@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(node -e ' *)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(echo \"TYPECHECK_EXIT:$?\")",
+      "Bash(echo \"LINT_EXIT:$?\")"
     ]
   }
 }

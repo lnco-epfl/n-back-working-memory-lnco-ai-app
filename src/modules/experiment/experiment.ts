@@ -23,7 +23,7 @@ import { buildIntroduction } from './parts/introduction';
 import { buildPractice } from './parts/practice';
 import { buildMainTask } from './parts/task-core';
 import './styles/main.scss';
-import { Timeline, Trial } from './utils/types';
+import { NarrationPlayer, Timeline, Trial } from './utils/types';
 import { resolveLink } from './utils/utils';
 
 /**
@@ -66,6 +66,14 @@ export async function run({
 
   // Initialize experiment state
   const state = new ExperimentState(input.settings);
+
+  // Swap in a no-op narration player when the experimenter has disabled it,
+  // so timeline builders don't need to know about the setting themselves.
+  const effectiveNarration: NarrationPlayer = state.getGeneralSettings()
+    .enableNarration
+    ? narration
+    : { play: () => {}, stop: () => {} };
+
   const calibratedFontSize =
     input.screenCalibration?.fontSize ?? state.getGeneralSettings().fontSize;
   const calibratedNumberScale = input.screenCalibration?.scale ?? 1;
@@ -213,7 +221,7 @@ export async function run({
 
   // Introduction
   timeline.push({
-    timeline: buildIntroduction(state, narration),
+    timeline: buildIntroduction(state, effectiveNarration),
     on_timeline_start() {
       if (jsPsych.progressBar) jsPsych.progressBar.progress = 0.0;
     },
@@ -226,7 +234,7 @@ export async function run({
         state,
         updateDataWithSettings,
         jsPsych,
-        narration,
+        effectiveNarration,
       ),
       on_timeline_start() {
         if (jsPsych.progressBar) jsPsych.progressBar.progress = 0.2;
@@ -236,7 +244,12 @@ export async function run({
 
   // Main task
   timeline.push({
-    timeline: buildMainTask(state, updateDataWithSettings, jsPsych, narration),
+    timeline: buildMainTask(
+      state,
+      updateDataWithSettings,
+      jsPsych,
+      effectiveNarration,
+    ),
     on_timeline_start() {
       state.startMainTask();
       if (jsPsych.progressBar) {
