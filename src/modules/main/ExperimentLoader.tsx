@@ -63,7 +63,11 @@ export const ExperimentLoader: FC<ExperimentLoaderProps> = ({ narration }) => {
   };
 
   const assetPath = {
-    images: [i18n.t('NBACK.HAND_IMAGE')],
+    images: [
+      i18n.t('NBACK.HAND_IMAGE'),
+      'assets/images/hand-en.png',
+      'assets/images/hand-fr.png',
+    ],
     audio: [
       'assets/audio/nback_main_ending.mp3',
       'assets/audio/nback_instructions_intro.mp3',
