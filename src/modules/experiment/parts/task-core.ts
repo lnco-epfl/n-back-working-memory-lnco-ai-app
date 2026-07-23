@@ -7,7 +7,7 @@ import {
   ExperimentState,
   isTargetTrial,
 } from '../jspsych/experiment-state-class';
-import i18n from '../jspsych/i18n';
+import i18n, { getNarrationSrc } from '../jspsych/i18n';
 import { breakTrial } from '../trials/break-trial';
 import { buildCountdown } from '../trials/countdown-trial';
 import NBackStimulusPlugin from '../trials/nback-stimulus-trial';
@@ -51,7 +51,7 @@ export const buildMainTask = (
     `,
     choices: [' '],
     on_start() {
-      narration.play('assets/audio/nback_instructions_main.mp3');
+      narration.play(getNarrationSrc('nback_instructions_main'));
     },
     on_finish() {
       narration.stop();
@@ -138,7 +138,7 @@ export const buildMainTask = (
     `,
     choices: [' '],
     on_start() {
-      narration.play('assets/audio/nback_main_ending.mp3');
+      narration.play(getNarrationSrc('nback_main_ending'));
     },
     on_finish() {
       narration.stop();

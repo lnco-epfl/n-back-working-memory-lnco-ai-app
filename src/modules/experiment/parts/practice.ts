@@ -8,7 +8,7 @@ import {
   ExperimentState,
   isTargetTrial,
 } from '../jspsych/experiment-state-class';
-import i18n from '../jspsych/i18n';
+import i18n, { getNarrationSrc } from '../jspsych/i18n';
 import { buildCountdown } from '../trials/countdown-trial';
 import NBackStimulusPlugin from '../trials/nback-stimulus-trial';
 import { practiceFeedbackTrial } from '../trials/practice-feedback-trial';
@@ -101,7 +101,7 @@ export const buildPractice = (
         choices: [t('NBACK.CONTINUE_BUTTON')],
         on_start() {
           if (repetitionsUsed > 0) {
-            narration.play('assets/audio/nback_practice_repeat.mp3');
+            narration.play(getNarrationSrc('nback_practice_repeat'));
           }
         },
         on_finish() {
@@ -159,7 +159,7 @@ export const buildPractice = (
     `,
     on_start: () => {
       removeTrainingBanner();
-      narration.play('assets/audio/nback_practice_complete.mp3');
+      narration.play(getNarrationSrc('nback_practice_complete'));
     },
     on_finish: () => {
       narration.stop();
@@ -193,7 +193,7 @@ export const buildPractice = (
       t('PRACTICE.COMPREHENSION_C'),
     ],
     on_start() {
-      narration.play('assets/audio/nback_practice_comprehension.mp3');
+      narration.play(getNarrationSrc('nback_practice_comprehension'));
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     on_finish: (data: any) => {

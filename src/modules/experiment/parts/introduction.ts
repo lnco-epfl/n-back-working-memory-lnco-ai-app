@@ -2,7 +2,7 @@ import FullscreenPlugin from '@jspsych/plugin-fullscreen';
 import HtmlButtonResponsePlugin from '@jspsych/plugin-html-button-response';
 
 import { ExperimentState } from '../jspsych/experiment-state-class';
-import i18n from '../jspsych/i18n';
+import i18n, { getNarrationSrc } from '../jspsych/i18n';
 import { NarrationPlayer, Timeline, Trial } from '../utils/types';
 
 const t = i18n.t.bind(i18n);
@@ -50,7 +50,7 @@ export const buildTaskInstructions = (
         </div>
       `,
       on_start() {
-        narration.play('assets/audio/nback_instructions_intro.mp3');
+        narration.play(getNarrationSrc('nback_instructions_intro'));
       },
       on_finish() {
         narration.stop();
@@ -69,7 +69,7 @@ export const buildTaskInstructions = (
         </div>
       `,
       on_start() {
-        narration.play('assets/audio/nback_instructions_practice.mp3');
+        narration.play(getNarrationSrc('nback_instructions_practice'));
       },
       on_finish() {
         narration.stop();
